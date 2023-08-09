@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-07-2023 a las 00:43:57
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.1.6
+-- Tiempo de generación: 10-08-2023 a las 01:42:13
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,21 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_project`
 --
-CREATE DATABASE IF NOT EXISTS `db_project` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `db_project`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
-DROP PROCEDURE IF EXISTS `sp_select_all_client`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_client` ()   BEGIN
 SELECT  Client_id,Client_name,Client_identification,Client_email,Client_phone,Client_address,DT.DocumentType_id,ST.Status_id,ST.Status_name, DT.DocumentType_name FROM client CLI
 INNER JOIN status ST ON CLI.Status_id=ST.Status_id
 INNER JOIN document_type DT ON CLI.DocumentType_id=DT.DocumentType_id;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_select_all_products`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_products` ()   BEGIN
 SELECT product_id,product_name,product_descriptions,product_code,product_value,product_img,ST.Status_name,TPRO.TypeProduct_name 
 FROM product PRO 
@@ -43,7 +39,15 @@ INNER JOIN typeproduct TPRO ON PRO.TypeProduct_id=TPRO.TypeProduct_id
 WHERE ST.Status_id=1;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_select_all_user`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_product_id` (IN `productId` INT)   BEGIN
+SELECT Product_id,Product_name,Product_descriptions,PC.Product_code,PV.Product_value,Product_image,ST.Status_id,TP.TypeProduct_id
+FROM Product US 
+INNER JOIN status ST ON US.Status_id=ST.Status_id
+INNER JOIN TypeProduct TP ON US.TypeProduct=TP.TypeProduct
+INNER JOIN document_type DT ON US.Product_code=PC.Product_code
+WHERE Product_id=productId;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_user` ()   BEGIN
 SELECT User_id,User_name,User_lastName,DT.DocumentType_name,User_document,User_email,User_cellphone,SUBSTRING(User_password, 1, 5) AS User_password ,GT.GenderType_name,User_birthdate,ST.Status_name FROM user US 
 INNER JOIN status ST ON US.Status_id=ST.Status_id
@@ -51,16 +55,13 @@ INNER JOIN gendertype GT ON US.GenderType_id=GT.GenderType_id
 INNER JOIN document_type DT ON US.DocumentType_id=DT.DocumentType_id;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_select_client_id`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_client_id` (IN `clientId` INT)   BEGIN
 SELECT * FROM client WHERE Client_id=clientId;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_select_user_email`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_user_email` (IN `userEmail` VARCHAR(100))   BEGIN
 SELECT User_password,User_id FROM USER WHERE User_email=userEmail AND Status_id=1;END$$
 
-DROP PROCEDURE IF EXISTS `sp_select_user_id`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_user_id` (IN `userId` INT)   BEGIN
 SELECT User_id,User_name,User_lastName,DT.DocumentType_name,User_document,User_email,User_cellphone,User_password,GT.GenderType_name,User_birthdate,ST.Status_name,DT.DocumentType_id,GT.GenderType_id,ST.Status_id,User_user FROM user US 
 INNER JOIN status ST ON US.Status_id=ST.Status_id
@@ -77,16 +78,13 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `city`
 --
 
-DROP TABLE IF EXISTS `city`;
-CREATE TABLE IF NOT EXISTS `city` (
-  `id_city` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `city` (
+  `id_city` int(11) NOT NULL,
   `name_city` varchar(80) NOT NULL,
   `department_id` int(11) NOT NULL,
   `is_capital` tinyint(1) NOT NULL DEFAULT 0,
-  `code_city` int(11) NOT NULL,
-  PRIMARY KEY (`id_city`),
-  KEY `city_department` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1105 DEFAULT CHARSET=utf8mb4;
+  `code_city` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `city`
@@ -1204,9 +1202,8 @@ INSERT INTO `city` (`id_city`, `name_city`, `department_id`, `is_capital`, `code
 -- Estructura de tabla para la tabla `client`
 --
 
-DROP TABLE IF EXISTS `client`;
-CREATE TABLE IF NOT EXISTS `client` (
-  `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `client` (
+  `Client_id` int(10) UNSIGNED NOT NULL,
   `Client_name` varchar(100) NOT NULL,
   `Client_identification` varchar(20) NOT NULL,
   `Client_email` varchar(100) NOT NULL,
@@ -1217,15 +1214,8 @@ CREATE TABLE IF NOT EXISTS `client` (
   `Status_id` int(10) NOT NULL,
   `Country_id` int(10) NOT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`Client_id`),
-  UNIQUE KEY `Client_identification` (`Client_identification`),
-  UNIQUE KEY `Client_email` (`Client_email`),
-  KEY `client_document_type` (`DocumentType_id`),
-  KEY `client_status` (`Status_id`),
-  KEY `client_country` (`Country_id`),
-  KEY `client_company` (`Comp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `client`
@@ -1241,14 +1231,12 @@ INSERT INTO `client` (`Client_id`, `Client_name`, `Client_identification`, `Clie
 -- Estructura de tabla para la tabla `company`
 --
 
-DROP TABLE IF EXISTS `company`;
-CREATE TABLE IF NOT EXISTS `company` (
-  `Comp_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `company` (
+  `Comp_id` int(11) NOT NULL,
   `Comp_name` varchar(50) NOT NULL,
   `Comp_description` varchar(200) NOT NULL,
-  `Comp_email` varchar(100) NOT NULL,
-  PRIMARY KEY (`Comp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+  `Comp_email` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `company`
@@ -1263,13 +1251,11 @@ INSERT INTO `company` (`Comp_id`, `Comp_name`, `Comp_description`, `Comp_email`)
 -- Estructura de tabla para la tabla `country`
 --
 
-DROP TABLE IF EXISTS `country`;
-CREATE TABLE IF NOT EXISTS `country` (
-  `Country_id` int(10) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `country` (
+  `Country_id` int(10) NOT NULL,
   `Country_name` varchar(20) NOT NULL,
-  `Country_symbol` varchar(10) NOT NULL,
-  PRIMARY KEY (`Country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+  `Country_symbol` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `country`
@@ -1284,14 +1270,11 @@ INSERT INTO `country` (`Country_id`, `Country_name`, `Country_symbol`) VALUES
 -- Estructura de tabla para la tabla `department`
 --
 
-DROP TABLE IF EXISTS `department`;
-CREATE TABLE IF NOT EXISTS `department` (
-  `department_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `department` (
+  `department_id` int(11) NOT NULL,
   `department_name` varchar(255) NOT NULL,
-  `region_id` int(11) NOT NULL,
-  PRIMARY KEY (`department_id`),
-  KEY `department_region` (`region_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=332 DEFAULT CHARSET=utf8mb4;
+  `region_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `department`
@@ -1338,13 +1321,11 @@ INSERT INTO `department` (`department_id`, `department_name`, `region_id`) VALUE
 -- Estructura de tabla para la tabla `document_type`
 --
 
-DROP TABLE IF EXISTS `document_type`;
-CREATE TABLE IF NOT EXISTS `document_type` (
-  `DocumentType_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `document_type` (
+  `DocumentType_id` int(11) NOT NULL,
   `DocumentType_name` varchar(60) NOT NULL,
-  `DocumentType_descriptions` varchar(80) NOT NULL,
-  PRIMARY KEY (`DocumentType_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+  `DocumentType_descriptions` varchar(80) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `document_type`
@@ -1363,13 +1344,11 @@ INSERT INTO `document_type` (`DocumentType_id`, `DocumentType_name`, `DocumentTy
 -- Estructura de tabla para la tabla `gendertype`
 --
 
-DROP TABLE IF EXISTS `gendertype`;
-CREATE TABLE IF NOT EXISTS `gendertype` (
-  `GenderType_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gendertype` (
+  `GenderType_id` int(11) NOT NULL,
   `GenderType_name` varchar(60) NOT NULL,
-  `GenderType_descriptions` varchar(80) NOT NULL,
-  PRIMARY KEY (`GenderType_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `GenderType_descriptions` varchar(80) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `gendertype`
@@ -1385,28 +1364,28 @@ INSERT INTO `gendertype` (`GenderType_id`, `GenderType_name`, `GenderType_descri
 -- Estructura de tabla para la tabla `product`
 --
 
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE IF NOT EXISTS `product` (
-  `Product_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `product` (
+  `Product_id` int(11) NOT NULL,
   `Product_name` varchar(50) NOT NULL,
   `Product_descriptions` varchar(200) NOT NULL,
   `Product_code` varchar(10) NOT NULL,
   `Product_value` varchar(10) NOT NULL,
   `Product_img` varchar(400) NOT NULL,
   `Status_id` int(11) NOT NULL,
-  `TypeProduct_id` int(11) NOT NULL,
-  PRIMARY KEY (`Product_id`),
-  KEY `product_status` (`Status_id`),
-  KEY `product_type_product` (`TypeProduct_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+  `TypeProduct_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `product`
 --
 
 INSERT INTO `product` (`Product_id`, `Product_name`, `Product_descriptions`, `Product_code`, `Product_value`, `Product_img`, `Status_id`, `TypeProduct_id`) VALUES
-(5, 'Computador ', '\r\nComputador .....', 'CO_001', '45000', 'https://www.alkosto.com/medias/196786419003-001-1400Wx1400H?context=bWFzdGVyfGltYWdlc3wzMzU3MDZ8aW1hZ2UvanBlZ3xhR00yTDJneFlTOHhNelEyTkRnMk1ESXlPVFkyTWk4eE9UWTNPRFkwTVRrd01ETmZNREF4WHpFME1EQlhlREUwTURCSXwxYmFmMDQ0NmRkNWRlZTJiMTFjYzk2OTVjNjU3OTQzZmU2ZmNmZGQ2Y2NlY2ZlY2VhNDg5MmVlZTczYjAxODIy', 1, 1),
-(6, 'Computador 1', 'Computador 1...', 'CO_002', '45000', 'https://www.alkosto.com/medias/196786419003-001-1400Wx1400H?context=bWFzdGVyfGltYWdlc3wzMzU3MDZ8aW1hZ2UvanBlZ3xhR00yTDJneFlTOHhNelEyTkRnMk1ESXlPVFkyTWk4eE9UWTNPRFkwTVRrd01ETmZNREF4WHpFME1EQlhlREUwTURCSXwxYmFmMDQ0NmRkNWRlZTJiMTFjYzk2OTVjNjU3OTQzZmU2ZmNmZGQ2Y2NlY2ZlY2VhNDg5MmVlZTczYjAxODIy', 1, 1);
+(1, 'Hamburguesa magnum', 'Una hamburguesa extra especial mas grande de lo habitual', 'CO_003', '50000', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/NCI_Visuals_Food_Hamburger.jpg/640px-NCI_Visuals_Food_Hamburger.jpg', 1, 1),
+(2, 'Salchipapa', 'Un salchipapas clasico para disfrutas', 'CO_004', '15000', 'https://www.comedera.com/wp-content/uploads/2021/07/salchipapas.jpg', 1, 1),
+(3, 'Pizza', 'Una pizza perfecta para una persona', 'CO_005', '25000', 'https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg', 1, 1),
+(4, 'Pizza Familiar', 'Una pizza perfecta para una Familia q se ama', 'CO_006', '25000', 'https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg', 1, 1),
+(5, 'Perro Caliente', 'Un perro caliente rico y listo para comer', 'CO_001', '45000', 'https://images-gmi-pmc.edge-generalmills.com/f5a517df-12c8-4d55-aa70-c882d99122e0.jpg', 1, 1),
+(6, 'Coca-Cola', 'Una Coca-Cola fria lista para un dia de calor', 'CO_002', '45000', 'https://i0.wp.com/tucochinito.com/wp-content/uploads/2019/07/Coca-de-vidrio.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1414,9 +1393,8 @@ INSERT INTO `product` (`Product_id`, `Product_name`, `Product_descriptions`, `Pr
 -- Estructura de tabla para la tabla `profile`
 --
 
-DROP TABLE IF EXISTS `profile`;
-CREATE TABLE IF NOT EXISTS `profile` (
-  `Profile_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `profile` (
+  `Profile_id` int(11) NOT NULL,
   `Profile_name` varchar(60) NOT NULL,
   `Profile_email` varchar(80) NOT NULL,
   `Profile_photo` varchar(120) NOT NULL,
@@ -1425,9 +1403,8 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `DocumentType_id` int(11) NOT NULL,
   `GenderType_id` int(11) NOT NULL,
   `User_id` int(11) NOT NULL,
-  `Profile_birthdate` date NOT NULL,
-  PRIMARY KEY (`Profile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Profile_birthdate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1435,12 +1412,10 @@ CREATE TABLE IF NOT EXISTS `profile` (
 -- Estructura de tabla para la tabla `region`
 --
 
-DROP TABLE IF EXISTS `region`;
-CREATE TABLE IF NOT EXISTS `region` (
-  `region_id` int(11) NOT NULL AUTO_INCREMENT,
-  `region_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`region_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `region` (
+  `region_id` int(11) NOT NULL,
+  `region_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `region`
@@ -1460,13 +1435,11 @@ INSERT INTO `region` (`region_id`, `region_name`) VALUES
 -- Estructura de tabla para la tabla `status`
 --
 
-DROP TABLE IF EXISTS `status`;
-CREATE TABLE IF NOT EXISTS `status` (
-  `Status_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `status` (
+  `Status_id` int(11) NOT NULL,
   `Status_name` varchar(60) NOT NULL,
-  `Status_descriptions` varchar(80) NOT NULL,
-  PRIMARY KEY (`Status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `Status_descriptions` varchar(80) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `status`
@@ -1484,13 +1457,11 @@ INSERT INTO `status` (`Status_id`, `Status_name`, `Status_descriptions`) VALUES
 -- Estructura de tabla para la tabla `typeproduct`
 --
 
-DROP TABLE IF EXISTS `typeproduct`;
-CREATE TABLE IF NOT EXISTS `typeproduct` (
-  `TypeProduct_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `typeproduct` (
+  `TypeProduct_id` int(11) NOT NULL,
   `TypeProduct_name` varchar(20) NOT NULL,
-  `TypeProduct_descriptions` varchar(50) NOT NULL,
-  PRIMARY KEY (`TypeProduct_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+  `TypeProduct_descriptions` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `typeproduct`
@@ -1507,9 +1478,8 @@ INSERT INTO `typeproduct` (`TypeProduct_id`, `TypeProduct_name`, `TypeProduct_de
 -- Estructura de tabla para la tabla `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `User_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `User_id` int(11) NOT NULL,
   `User_name` varchar(60) NOT NULL,
   `User_document` varchar(20) NOT NULL,
   `User_email` varchar(100) NOT NULL,
@@ -1520,13 +1490,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `User_birthdate` date NOT NULL DEFAULT current_timestamp(),
   `Status_id` int(11) NOT NULL,
   `DocumentType_id` int(11) NOT NULL,
-  `GenderType_id` int(11) NOT NULL,
-  PRIMARY KEY (`User_id`),
-  UNIQUE KEY `User_email` (`User_email`),
-  KEY `user_document_type` (`DocumentType_id`),
-  KEY `user_gender_type` (`GenderType_id`),
-  KEY `user_status_type` (`Status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+  `GenderType_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `user`
@@ -1537,7 +1502,186 @@ INSERT INTO `user` (`User_id`, `User_name`, `User_document`, `User_email`, `User
 (2, 'DIego', '80857854', 'diegohernando@gmail.com', '3002541785', 'casallas', '$2y$10$wd3yR7eXY4Us0/kNwxziteq6zEnrMZZL3lXzpu4.nWjNuL3ZSPv.G', 'diegohernando@gmail.com', '1986-02-02', 1, 1, 1),
 (3, 'Daniela ', '1021987452', 'daniela123@gmail.com', '3158565830', 'Villalba ', '$2y$10$SjLQu2msRedOGUDdv.qemuAKjelSBABt4uNSsvM0sPlXt.miy2qD.', 'Daniela123@gmail.com', '0008-05-15', 1, 1, 1),
 (4, 'Diego', '805414141', 'diegocasallas@gmail.com', '3012528745', 'casallas', '$2y$10$.5rTQzxzdmn.K7G6TtDZTOgt/LO3Rr3y5RoZJIkNqazYbus1HAa8S', 'diegocasallas@gmail.com', '2023-07-28', 1, 1, 1),
-(13, 'Carlos', '10312528414', 'carlos@gmail.com', '3002514785', 'Rodriguez', '$2y$10$FiAGm0gOhNRmeEOpXqjKmO.mULReLwJygX.7VfvwpiqMXx8aS2lsi', 'carlos@gmail.com', '2023-07-29', 1, 1, 1);
+(13, 'Carlos', '10312528414', 'carlos@gmail.com', '3002514785', 'Rodriguez', '$2y$10$FiAGm0gOhNRmeEOpXqjKmO.mULReLwJygX.7VfvwpiqMXx8aS2lsi', 'carlos@gmail.com', '2023-07-29', 1, 1, 1),
+(14, 'JUAN', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'GARCIA', '$2y$10$H.O5t91aqunH/z4POfUvz.e526jGnSz8Lmu4/9NyYSOhWBHtAgYO2', 'garciaacevedojuandavid@gmail.com', '2006-07-09', 1, 2, 1);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `city`
+--
+ALTER TABLE `city`
+  ADD PRIMARY KEY (`id_city`),
+  ADD KEY `city_department` (`department_id`);
+
+--
+-- Indices de la tabla `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`Client_id`),
+  ADD UNIQUE KEY `Client_identification` (`Client_identification`),
+  ADD UNIQUE KEY `Client_email` (`Client_email`),
+  ADD KEY `client_document_type` (`DocumentType_id`),
+  ADD KEY `client_status` (`Status_id`),
+  ADD KEY `client_country` (`Country_id`),
+  ADD KEY `client_company` (`Comp_id`);
+
+--
+-- Indices de la tabla `company`
+--
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`Comp_id`);
+
+--
+-- Indices de la tabla `country`
+--
+ALTER TABLE `country`
+  ADD PRIMARY KEY (`Country_id`);
+
+--
+-- Indices de la tabla `department`
+--
+ALTER TABLE `department`
+  ADD PRIMARY KEY (`department_id`),
+  ADD KEY `department_region` (`region_id`);
+
+--
+-- Indices de la tabla `document_type`
+--
+ALTER TABLE `document_type`
+  ADD PRIMARY KEY (`DocumentType_id`);
+
+--
+-- Indices de la tabla `gendertype`
+--
+ALTER TABLE `gendertype`
+  ADD PRIMARY KEY (`GenderType_id`);
+
+--
+-- Indices de la tabla `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`Product_id`),
+  ADD KEY `product_status` (`Status_id`),
+  ADD KEY `product_type_product` (`TypeProduct_id`);
+
+--
+-- Indices de la tabla `profile`
+--
+ALTER TABLE `profile`
+  ADD PRIMARY KEY (`Profile_id`);
+
+--
+-- Indices de la tabla `region`
+--
+ALTER TABLE `region`
+  ADD PRIMARY KEY (`region_id`);
+
+--
+-- Indices de la tabla `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`Status_id`);
+
+--
+-- Indices de la tabla `typeproduct`
+--
+ALTER TABLE `typeproduct`
+  ADD PRIMARY KEY (`TypeProduct_id`);
+
+--
+-- Indices de la tabla `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`User_id`),
+  ADD UNIQUE KEY `User_email` (`User_email`),
+  ADD KEY `user_document_type` (`DocumentType_id`),
+  ADD KEY `user_gender_type` (`GenderType_id`),
+  ADD KEY `user_status_type` (`Status_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `city`
+--
+ALTER TABLE `city`
+  MODIFY `id_city` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1105;
+
+--
+-- AUTO_INCREMENT de la tabla `client`
+--
+ALTER TABLE `client`
+  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de la tabla `company`
+--
+ALTER TABLE `company`
+  MODIFY `Comp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `country`
+--
+ALTER TABLE `country`
+  MODIFY `Country_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `department`
+--
+ALTER TABLE `department`
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
+
+--
+-- AUTO_INCREMENT de la tabla `document_type`
+--
+ALTER TABLE `document_type`
+  MODIFY `DocumentType_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `gendertype`
+--
+ALTER TABLE `gendertype`
+  MODIFY `GenderType_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `product`
+--
+ALTER TABLE `product`
+  MODIFY `Product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `profile`
+--
+ALTER TABLE `profile`
+  MODIFY `Profile_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `region`
+--
+ALTER TABLE `region`
+  MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `status`
+--
+ALTER TABLE `status`
+  MODIFY `Status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `typeproduct`
+--
+ALTER TABLE `typeproduct`
+  MODIFY `TypeProduct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `user`
+--
+ALTER TABLE `user`
+  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
