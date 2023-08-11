@@ -444,3 +444,8 @@ body {
   .btn-3:hover {
     background-color: #13462E;
   }
+
+  .anuncio {
+    text-decoration:none;
+  }
+

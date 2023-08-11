@@ -18,6 +18,7 @@
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +47,8 @@
         </ul>
       </nav>
       <div id="carrito">
-    <img src="/structure_project_crud_login/assets/img/images/car.svg" alt="car" id="img-carrito">
+    <img src="../../assets/img/images/car.svg" alt="car" id="img-carrito">
+    <h6 id="numProduct" >0</h6>
     <div id="lista-carrito">
         <table>
             <thead>
@@ -108,5 +110,17 @@
           <a href="index.php">www.gamestrip.com</a>
     </div>
   <script src="../assets/js/script.js" type="javascript"></script>
+  <script>
+   var cont=0;
+   var newArraProdcutSelect=new Array();
+    function addProduct(id){
+
+      cont=cont+1;
+      document.getElementById('numProduct').innerHTML=cont;
+      alert("Producto Id: "+id+ " Cantidad de Productos: "+cont);
+      newArraProdcutSelect[cont]=id;
+    }
+    console.log(newArraProdcutSelect);
+  </script>
   
 </html>

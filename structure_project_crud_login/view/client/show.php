@@ -1,38 +1,20 @@
 <?php
 include("../../config/config.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-  $userId = $_REQUEST['User_id'];
-  $sql = "CALL sp_select_user_id(" . $userId . "); ";
-  $sql .= "SELECT * FROM `document_type` WHERE 1;";
-  $sql .= "SELECT * FROM `gendertype` WHERE 1;";
-  $sql .= "SELECT * FROM `status` WHERE 1;";
-  $resultArray = array();
-  if (!$connect->multi_query($sql)) {
-    echo "Falló la multiconsulta: (" . $connect->errno . ") " . $connect->error;
-  }
+$sql = "CALL sp_select_all_products(); ";
 
-  do {
-    if ($result = $connect->store_result()) {
-
-
-      $resultQuery = $result->fetch_all(MYSQLI_NUM);
-      array_push($resultArray, $resultQuery);
-
-      $result->free();
-    }
-  } while ($connect->more_results() && $connect->next_result());
-  $resultUser = $resultArray[0];
-  $resultDocumentType = $resultArray[1];
-  $resultGenderType = $resultArray[2];
-  $resultStatus = $resultArray[3];
+if (!$result = $connect->query($sql)) {
+  echo "Error consult: (" . $connect->errno . ") " . $connect->error;
+} else {
+  $resultClient = $result->fetch_all(MYSQLI_NUM);
 }
 
 
-
-
-
 ?>
+
+<?php
+  include('../assets/view/nav.php');
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,117 +23,65 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Name of My Form One</title>
-  <link href="../../assets/css/formStyle.css" rel="stylesheet" />
+  <link href="../../assets/css/asdstyle.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
 <body>
+<table name="tableViewUser" id="tableViewUser" class="tableViewUser">
 
-  <div id="sectionOne" class="sectionOne" name="sectionOne">
-    <h2>INFORMACIÓN DEL USUARIO</h2>
-    <form name="formUser" method="GET" action="" id="formUser" class="formUser">
-      <input type="hidden" value="<?= $resultUser[0][0] ?>" id="User_id" name="User_id" disabled/>
-      <table name="tableUser" id="tableUser" class="tableUser">
-        <tr>
-          <td>
-            <input type="text" value="<?= $resultUser[0][1] ?>" placeholder="Digitar Nombre" id="User_name" name="User_name" required disabled/>
-          </td>
-          <td>
-            <input type="text" value="<?= $resultUser[0][2] ?>" placeholder="Digitar Apellido" id="User_lastName" name="User_lastName" required disabled/>
-          </td>
-          <td>
-            <input type="number" value="<?= $resultUser[0][4] ?>" placeholder="Digitar Documento" id="User_document" name="User_document" required disabled />
-
-          </td>
-
-        </tr>
+      <thead>
         <tr>
 
-          <td>
-            <input type="email" value="<?= $resultUser[0][5] ?>" placeholder="Digitar Correo Electrónico" id="User_email" name="User_email" required disabled/>
-          </td>
-          <td>
-            <input type="number" value="<?= $resultUser[0][6] ?>" placeholder="Digitar Número de Celular" id="User_cellphone" name="User_cellphone" required disabled/>
-          </td>
-          <td>
-            <input type="date" value="<?= $resultUser[0][9] ?>" placeholder="Fecha de Nacimiento" id="birthdate" name="birthdate" required disabled/>
-          </td>
+          <th>#</th>
+          <th>NOMBRE</th>
+          <th>DOCUMENTO</th>
+          <th>CORREO</th>
+          <th>CELULAR</th>
+          <th>DIRECCIÓN</th>
+          <th>TIPO DE DOCUMENTO</th>
+          <th>ESTADO</th>
+          <th>ACCIONES</th>
 
         </tr>
+      </thead>
+      <tbody>
+        <?php
+        $row= $addProduct;
+        for ($i = cont($row) = addProduct) {
+          echo '<tr class="checkTr">';
+          echo '<td>' . ($i + 1) . '</td>';
+          echo '<td>' . $row[$i][1] . '</td>';
+          echo '<td>' . $row[$i][2] . '</td>';
+          echo '<td>' . $row[$i][3] . '</td>';
+          echo '<td>' . $row[$i][4] . '</td>';
+          echo '<td>' . $row[$i][5] . '</td>';
+          echo '<td>' . $row[$i][9] . '</td>';
+          echo '<td>' . $row[$i][8] . '</td>';
+          echo '
+        <td class="btnsActions" style="text-align: center;">
+          
+        </td>
+      </tr>';
+        }
+        ?>
 
+      </tbody>
+      <tfoot>
         <tr>
-          <td>
-            <select name="DocumentType_id" id="DocumentType_id" required disabled>
-              <?php
-
-              for ($i = 0; $i < count($resultDocumentType); $i++) {
-                if ($resultUser[0][11] == $resultDocumentType[$i][0]) {
-                  echo '<option value="' . $resultDocumentType[$i][0] . '" selected="selected">' . $resultDocumentType[$i][1] . '</option>';
-                } else {
-                  echo '<option value="' . $resultDocumentType[$i][0] . '">' . $resultDocumentType[$i][1] . '</option>';
-                }
-              };
-              ?>
-            </select>
-          </td>
-          <td>
-            <select name="GenderType_id" id="GenderType_id" required disabled>
-              <?php
-              for ($i = 0; $i < count($resultGenderType); $i++) {
-
-
-                if ($resultUser[0][12] == $resultGenderType[$i][0]) {
-                  echo '<option value="' . $resultGenderType[$i][0] . '" selected="selected">' . $resultGenderType[$i][1] . '</option>';
-                } else {
-                  echo '<option value="' . $resultGenderType[$i][0] . '">' . $resultGenderType[$i][1] . '</option>';
-                }
-              };
-
-              ?>
-
-            </select>
-          </td>
-
-          <td>
-            <select name="Status_id" id="Status_id" required disabled>
-              <?php
-              for ($i = 0; $i < count($resultStatus); $i++) {
-
-                if ($resultUser[0][13] == $resultStatus[$i][0]) {
-                  echo '<option value="' . $resultStatus[$i][0] . '" selected="selected">' . $resultStatus[$i][1] . '</option>';
-                } else {
-                  echo '<option value="' . $resultStatus[$i][0] . '">' . $resultStatus[$i][1] . '</option>';
-                }
-              };
-              ?>
-            </select>
-
-          </td>
+        <th>#</th>
+          <th>NOMBRE</th>
+          <th>DOCUMENTO</th>
+          <th>CORREO</th>
+          <th>CELULAR</th>
+          <th>DIRECCIÓN</th>
+          <th>TIPO DE DOCUMENTO</th>
+          <th>ESTADO</th>
+          <th>ACCIONES</th>
         </tr>
 
-
-        <tr>
-          <td colspan="3">
-
-          </td>
-        </tr>
-
-      </table>
-      <h3>SEGURIDAD</h3>
-      <table class="tableUser">
-        <tr>
-          <td>
-            <input type="email" value="<?= $resultUser[0][14] ?>" placeholder="Digitar Usuario" id="User_user" name="User_user" required  disabled/>
-          </td>
-          <td>
-            <input type="password" value="<?= $resultUser[0][14] ?>" placeholder="Digitar Contraseña" id="User_password" name="User_password" required disabled/>
-          </td>
-     
-        </tr>
-      </table>
-
-    </form>
-  </div>
-  <script src="../assets/js/main.js" type="javascript"></script>
+      </tfoot>
+    </table>
 </body>
 
 </html>

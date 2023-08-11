@@ -55,7 +55,7 @@ $resultStatus = $resultArray[2];
         </ul>
       </nav>
       <div id="carrito">
-    <img src="/structure_project_crud_login/assets/img/images/car.svg" alt="car" id="img-carrito">
+    <img src="../../assets/img/images/car.svg" alt="car" id="img-carrito">
     <div id="lista-carrito">
         <table>
             <thead>
