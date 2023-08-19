@@ -1,28 +1,23 @@
 <?php
-include("../../config/config.php");
+  include('../../config/config.php');
+  session_start();
+  $sql="CALL sp_select_all_products()";
 
-$sql = "SELECT * FROM `document_type` WHERE 1;";
-$sql .= "SELECT * FROM `gendertype` WHERE 1;";
-$sql .= "SELECT * FROM `status` WHERE 1;";
-$resultArray = array();
-if (!$connect->multi_query($sql)) {
-  echo "Falló la multiconsulta: (" . $connect->errno . ") " . $connect->error;
-}
-
-do {
-  if ($result = $connect->store_result()) {
-
+  if (!$result =$connect->query($sql)) {
+    echo "Falló la multiconsulta: (" . $connect->errno . ") " . $connect->error;
+  }else{
     $resultQuery = $result->fetch_all(MYSQLI_NUM);
-    array_push($resultArray, $resultQuery);
-
-    $result->free();
   }
-} while ($connect->more_results() && $connect->next_result());
-$resultDocumentType = $resultArray[0];
-$resultGenderType = $resultArray[1];
-$resultStatus = $resultArray[2];
+  if(!isset($_SESSION["newsession"])){
+    echo("");
+  }else{
+    
+  }
+
+
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,18 +51,12 @@ $resultStatus = $resultArray[2];
       </nav>
       <div id="carrito">
     <img src="/structure_project_crud_login/assets/img/images/car.svg" alt="car" id="img-carrito">
+    <h6 id="numProduct" >0</h6>
     <div id="lista-carrito">
         <table>
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
             <tbody></tbody>
         </table>
-        <a href="#" id="vaciar-carrito" class="btn-3">Vaciar Carrito</a>
+        <a href="index.php" id="cancelar" class="btn-3">Cancelar compra</a>
     </div>
 
   </form>
@@ -83,7 +72,7 @@ $resultStatus = $resultArray[2];
     <div id="sectionOne" class="sectionOne" name="sectionOne">
       <h2>REGISTRARSE</h2>
 
-      <form name="formClient" method="GET" action="../../controller/user/insert.php" id="formUser" class="row">
+      <form name="formUser" method="GET" action="../../controller/user/insert.php" id="formUser" class="row">
         <input type="hidden" value="" id="User_id" name="User_id" />
 
         <div class="col-4">
@@ -135,52 +124,6 @@ $resultStatus = $resultArray[2];
           </div>
         </div>
 
-        <div class="col-4">
-          <div class="form-floating">
-            <select class="form-select" id="DocumentType_id" name="DocumentType_id" aria-label="Floating label select example">
-              <option selected>Open this select menu</option>
-
-              <?php
-                for ($i = 0; $i < count($resultDocumentType); $i++) {
-                  echo '<option value="' . $resultDocumentType[$i][0] . '">' . $resultDocumentType[$i][1] . '</option>';
-                }
-                ;
-                ?>
-            </select>
-            <label for="DocumentType_id">Tipo de Documento</label>
-          </div>
-        </div>
-
-        <div class="col-4">
-          <div class="form-floating">
-            <select class="form-select" id="GenderType_id" name="GenderType_id" aria-label="Floating label select example">
-              <option selected>Open this select menu</option>
-
-              <?php
-                 
-                 for ($i = 0; $i < count($resultGenderType); $i++) {
-                   echo '<option value="' . $resultGenderType[$i][0] . '">' . $resultGenderType[$i][1] . '</option>';
-                 };
-                ?>
-            </select>
-            <label for="GenderType_id">Genero</label>
-          </div>
-        </div>
-
-        <div class="col-4">
-          <div class="form-floating">
-            <select class="form-select" id="Status_id" name="Status_id" aria-label="Floating label select example">
-              <option selected>Open this select menu</option>
-              <?php
-                for ($i = 0; $i < count($resultStatus); $i++) {
-                  echo '<option value="' . $resultStatus[$i][0] . '">' . $resultStatus[$i][1] . '</option>';
-                }
-                ;
-                ?>
-            </select>
-            <label for="Status_id">Estado</label>
-          </div>
-        </div>
 
 
         <h3>SEGURIDAD</h3>

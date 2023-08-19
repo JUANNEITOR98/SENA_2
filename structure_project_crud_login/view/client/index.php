@@ -54,16 +54,9 @@
     <h6 id="numProduct" >0</h6>
     <div id="lista-carrito">
         <table>
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
             <tbody></tbody>
         </table>
-        <a href="#" id="vaciar-carrito" class="btn-3">Vaciar Carrito</a>
+        <a href="buy.php" id="Comprar" class="btn-3">Comprar objetos</a>
     </div>
 
   </form>
