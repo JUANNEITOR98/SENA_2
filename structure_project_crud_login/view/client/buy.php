@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </form>
 </div>
 </div>
-    <h2>Create New Client</h2>
+    <h2>Confirmar tus datos</h2>
     <form action="insert_client_with_defaults.php" method="POST">
         <label for="Client_name">Client Name:</label>
         <input type="text" name="Client_name" required><br>
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="Client_address">Client Address:</label>
         <input type="text" name="Client_address" required><br>
 
-        <input type="submit" value="Create Client">
+        <input type="submit" value="Confirmar Compra">
     </form>
 
     
