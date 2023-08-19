@@ -14,8 +14,6 @@
     
   }
 
-
-
 ?>
 
 
@@ -135,17 +133,24 @@
           <a href="index.php">www.gamestrip.com</a>
     </div>
     <script>
-   var cont=0;
-   var newArraProdcutSelect=new Array();
-    function addProduct(id){
+var cont = 0;
+var newArraProdcutSelect = [];
 
-      cont=cont+1;
-      document.getElementById('numProduct').innerHTML=cont;
-      alert("Producto Id: "+id+ " Cantidad de Productos: "+cont);
-      newArraProdcutSelect[cont]=id;
-    }
-    console.log(newArraProdcutSelect);
+function addProduct(id) {
+    cont = cont + 1;
+    document.getElementById('numProduct').innerHTML = cont;
+    alert("Producto Id: " + id + " Cantidad de Productos: " + cont);
+    newArraProdcutSelect[cont] = id;
+}
+function sendDataToAnotherPage() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "pagina_destino.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("data=" + JSON.stringify(newArraProdcutSelect));
+}
+
   </script>
 </body>
 
 </html>
+

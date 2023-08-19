@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-08-2023 a las 18:16:58
+-- Tiempo de generación: 19-08-2023 a las 22:32:10
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -25,6 +25,35 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertClientWithDefaults` (IN `p_ClientName` VARCHAR(255), IN `p_ClientIdentification` VARCHAR(20), IN `p_ClientEmail` VARCHAR(255), IN `p_ClientPhone` VARCHAR(15), IN `p_ClientAddress` VARCHAR(255))   BEGIN
+    -- Insertar el cliente con valores fijos
+    INSERT INTO client (
+        Client_name,
+        Client_identification,
+        Client_email,
+        Client_phone,
+        Client_address,
+        DocumentType_id,
+        Comp_id,
+        Status_id,
+        Country_id,
+        updated_at,
+        created_at
+    ) VALUES (
+        p_ClientName,
+        p_ClientIdentification,
+        p_ClientEmail,
+        p_ClientPhone,
+        p_ClientAddress,
+        1, -- DocumentType_id siempre 1
+        1, -- Comp_id siempre 1
+        1, -- Status_id siempre 1
+        1, -- Country_id siempre 1
+        NOW(),
+        NOW()
+    );
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_client` ()   BEGIN
 SELECT  Client_id,Client_name,Client_identification,Client_email,Client_phone,Client_address,DT.DocumentType_id,ST.Status_id,ST.Status_name, DT.DocumentType_name FROM client CLI
 INNER JOIN status ST ON CLI.Status_id=ST.Status_id
@@ -1217,6 +1246,13 @@ CREATE TABLE `client` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `client`
+--
+
+INSERT INTO `client` (`Client_id`, `Client_name`, `Client_identification`, `Client_email`, `Client_phone`, `Client_address`, `DocumentType_id`, `Comp_id`, `Status_id`, `Country_id`, `updated_at`, `created_at`) VALUES
+(1, 'juan', '1023372763', 'dsapopop@gmai.com', 'sadasd', 'calle falsa 98', 1, 1, 1, 1, '2023-08-19 15:12:00', '2023-08-19 15:12:00');
+
 -- --------------------------------------------------------
 
 --
@@ -1610,7 +1646,7 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT de la tabla `client`
 --
 ALTER TABLE `client`
-  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `company`
