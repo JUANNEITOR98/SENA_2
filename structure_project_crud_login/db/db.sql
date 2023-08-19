@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-08-2023 a las 02:29:24
+-- Tiempo de generación: 19-08-2023 a las 18:16:58
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -1217,14 +1217,6 @@ CREATE TABLE `client` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Volcado de datos para la tabla `client`
---
-
-INSERT INTO `client` (`Client_id`, `Client_name`, `Client_identification`, `Client_email`, `Client_phone`, `Client_address`, `DocumentType_id`, `Comp_id`, `Status_id`, `Country_id`, `updated_at`, `created_at`) VALUES
-(23, 'Diego Casallas', '80854412', 'cliente@gmail.com', '7800412', 'Calle Falsa 123', 5, 1, 1, 1, NULL, '2023-07-22 06:20:23'),
-(24, 'Juan ', '100457842', 'juan@gmail.com', '3012824759', 'Calle 124', 2, 1, 1, 1, NULL, '2023-07-22 06:45:38');
-
 -- --------------------------------------------------------
 
 --
@@ -1502,8 +1494,11 @@ INSERT INTO `user` (`User_id`, `User_name`, `User_document`, `User_email`, `User
 (2, 'DIego', '80857854', 'diegohernando@gmail.com', '3002541785', 'casallas', '$2y$10$wd3yR7eXY4Us0/kNwxziteq6zEnrMZZL3lXzpu4.nWjNuL3ZSPv.G', 'diegohernando@gmail.com', '1986-02-02', 1, 1, 1),
 (3, 'Daniela ', '1021987452', 'daniela123@gmail.com', '3158565830', 'Villalba ', '$2y$10$SjLQu2msRedOGUDdv.qemuAKjelSBABt4uNSsvM0sPlXt.miy2qD.', 'Daniela123@gmail.com', '0008-05-15', 1, 1, 1),
 (4, 'Diego', '805414141', 'diegocasallas@gmail.com', '3012528745', 'casallas', '$2y$10$.5rTQzxzdmn.K7G6TtDZTOgt/LO3Rr3y5RoZJIkNqazYbus1HAa8S', 'diegocasallas@gmail.com', '2023-07-28', 1, 1, 1),
-(13, 'Carlos', '10312528414', 'carlos@gmail.com', '3002514785', 'Rodriguez', '$2y$10$FiAGm0gOhNRmeEOpXqjKmO.mULReLwJygX.7VfvwpiqMXx8aS2lsi', 'carlos@gmail.com', '2023-07-29', 1, 1, 1),
-(14, 'JUAN', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'GARCIA', '$2y$10$H.O5t91aqunH/z4POfUvz.e526jGnSz8Lmu4/9NyYSOhWBHtAgYO2', 'garciaacevedojuandavid@gmail.com', '2006-07-09', 1, 2, 1);
+(5, 'Carlos', '10312528414', 'carlos@gmail.com', '3002514785', 'Rodriguez', '$2y$10$FiAGm0gOhNRmeEOpXqjKmO.mULReLwJygX.7VfvwpiqMXx8aS2lsi', 'carlos@gmail.com', '2023-07-29', 1, 1, 1),
+(6, 'JUAN', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'GARCIA', '$2y$10$H.O5t91aqunH/z4POfUvz.e526jGnSz8Lmu4/9NyYSOhWBHtAgYO2', 'garciaacevedojuandavid@gmail.com', '2006-07-09', 1, 2, 1),
+(7, 'BAKI', '123456789', 'BAKIHANMA123@GMAIL.COM', '2587445442', 'HANMA', '$2y$10$/7hveI1ppS9oPnmRwBjXLuoxnlnWbCSIuyPMelQp15AJzJOc9u7v2', 'BAKIHANMA123@GMAIL.COM', '1950-02-18', 1, 1, 1),
+(8, 'marilu', '3212162187', 'lulita-hernandez@hotmail.com', '159753', 'garcia', '$2y$10$Q/dDtou.M4Pi5jhIxD.eW.ECDx6hhc2gVawQktD0CkyJ2cZdXv8IK', 'lulita-hernandez@hotmail.com', '1995-07-18', 1, 1, 2),
+(9, 'Yujiro', '48464684', 'elpadredelano@gmail.com', '54816547681', 'Hanma', '$2y$10$a4BtYQ8RKqHDPKB7eKi5C.IfT0JQYQScLJfqiXT6B7xZbT8VZd2BG', 'elpadredelano@gmail.com', '1945-06-04', 1, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -1681,7 +1676,7 @@ ALTER TABLE `typeproduct`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restricciones para tablas volcadas
