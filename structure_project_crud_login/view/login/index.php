@@ -86,9 +86,10 @@ if (!$result = $connect->query($sql)) {
  
     </form>
   </div>
-    <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
-    <a href="#">www.miempresa.com</a>
-  </div>
+  <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
+            <a href="index.php">www.lasazondejuanita.com</a>
+    </div>
+
   <?php
   include('../assets/js/js.php');
   ?>

@@ -43,13 +43,17 @@
         </tr>
         <tr>
           <td>
-            <input type="submit" value="INGRESAR" id="btnGetInto" name="btnGetInto" class="btnGetInto"  />
+            <input type="submit" value="INGRESAR" id="btnGetInto" name="btnGetInto" class="btnGetInto"/>
 
           </td>
         </tr>
       </table>
     </form>
   </div>
+  <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
+            <a href="index.php">www.lasazondejuanita.com</a>
+    </div>
+
   <script src="../../assets/js/form.js" ></script>
 
 

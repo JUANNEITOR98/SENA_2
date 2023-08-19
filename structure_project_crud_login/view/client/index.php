@@ -129,8 +129,8 @@
       </div>
     </div>
   </div>
-    <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
-          <a href="index.php">www.gamestrip.com</a>
+      <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
+            <a href="index.php">www.lasazondejuanita.com</a>
     </div>
     <script>
 var cont = 0;

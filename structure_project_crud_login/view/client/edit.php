@@ -152,6 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     </form>
   </div>
+  <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
+    <a href="index.php">www.Lasazondejuanita.com</a>
   <script src="../assets/js/main.js" type="javascript"></script>
 </body>
 

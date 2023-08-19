@@ -74,23 +74,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
     <h2>Confirmar tus datos</h2>
     <form action="insert_client_with_defaults.php" method="POST">
-        <label for="Client_name">Client Name:</label>
+        <label for="Client_name">Inserta tu nombre y apellido:</label>
         <input type="text" name="Client_name" required><br>
 
-        <label for="Client_identification">Client Identification:</label>
+        <label for="Client_identification">Inserta tu identificacion:</label>
         <input type="text" name="Client_identification" required><br>
 
-        <label for="Client_email">Client Email:</label>
+        <label for="Client_email">Inserta tu correo electronico:</label>
         <input type="email" name="Client_email" required><br>
 
-        <label for="Client_phone">Client Phone:</label>
+        <label for="Client_phone">Inserta tu numero telefonico:</label>
         <input type="text" name="Client_phone" required><br>
 
-        <label for="Client_address">Client Address:</label>
+        <label for="Client_address">Inserta tu domicilio:</label>
         <input type="text" name="Client_address" required><br>
 
         <input type="submit" value="Confirmar Compra">
     </form>
+    <br>
+    <br>
+
+    <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
+    <a href="index.php">www.Lasazondejuanita.com</a>
 
     
 </body>
