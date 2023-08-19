@@ -63,49 +63,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
           <td>
             <input type="email" value="<?=$resultClient[0][3]?>"placeholder="Digitar Correo Electrónico" id="Client_email" name="Client_email" required />
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
         </tr>
-        <!--Cierre de fila para de la tabla - etiqueta de fila <tr>-->
-
-        <!--Inicio de fila para de la tabla - etiqueta de fila <tr>-->
         <tr>
-
-          <!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
           <td>
-            <!--Caja de texto etiqueta input - type => tipo texto <input>-->
-            <!--Caja de texto etiqueta input - value => valor de la caja de texto <input>-->
-            <!--Caja de texto etiqueta input - placeholder => Texto de referencia en el campo de texto <input>-->
-            <!--Caja de texto etiqueta input - required => indica que la caja de texto es requerida (obligatoria) <input>-->
-            <!--Caja de texto etiqueta input - name => permite a un script acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - id => permite a un script o al css acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - class => permite a una clase de css acceder a su contenido <input>-->
             <input type="number" value="<?=$resultClient[0][4]?>"placeholder="Digitar Número de Celular" id="Client_phone" name="Client_phone" required />
             
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
-          <!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
           <td>
-            <!--Caja de texto etiqueta input - type => tipo date <input>-->
-            <!--Caja de texto etiqueta input - value => valor de la caja de texto <input>-->
-            <!--Caja de texto etiqueta input - placeholder => Texto de referencia en el campo de texto <input>-->
-            <!--Caja de texto etiqueta input - required => indica que la caja de texto es requerida (obligatoria) <input>-->
-            <!--Caja de texto etiqueta input - name => permite a un script acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - id => permite a un script o al css acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - class => permite a una clase de css acceder a su contenido <input>-->
             <input type="text" value="<?=$resultClient[0][5]?>" placeholder="Dirección " id="Client_address" name="Client_address" required />
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
-<!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
 <td>
-            <!--La etiqueta select (<select>) de HTML representa un control que muestra un menú de opciones-->
-            <!--Inicio de la lista <select>-->
-            <!--lista de selección select - required => indica que la caja de texto es requerida (obligatoria) <select>-->
-            <!--lista de selección select - name => permite a un script acceder a su contenido <select>-->
-            <!--lista de selección select - id => permite a un script o al css acceder a su contenido <select>-->
-            <!--lista de selección select - class => permite a una clase de css acceder a su contenido <select>-->
             <select name="Status_id" id="Status_id" required >
-              <!--Inicio de etiqueta de opciones de lista <option>-->
-              <!--Valor de la opción - value => valor de la opción <option>-->
               <?php
               for ($i = 0; $i < count($resultStatus); $i++) {
 
@@ -119,26 +87,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               };
               ?>
             </select>
-            <!--Cierre de la lista <select>-->
 
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
         </tr>
-        <!--Cierre de fila para de la tabla - etiqueta de fila <tr>-->
-
-        <!--Inicio de fila para de la tabla - etiqueta de fila <tr>-->
         <tr>
-          <!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
           <td>
-            <!--La etiqueta select (<select>) de HTML representa un control que muestra un menú de opciones-->
-            <!--Inicio de la lista <select>-->
-            <!--lista de selección select - required => indica que la caja de texto es requerida (obligatoria) <select>-->
-            <!--lista de selección select - name => permite a un script acceder a su contenido <select>-->
-            <!--lista de selección select - id => permite a un script o al css acceder a su contenido <select>-->
-            <!--lista de selección select - class => permite a una clase de css acceder a su contenido <select>-->
             <select name="DocumentType_id" id="DocumentType_id" required >
-              <!--Inicio de etiqueta de opciones de lista <option>-->
-              <!--Valor de la opción - value => valor de la opción <option>-->
               <?php
               for ($i = 0; $i < count($resultDocumentType); $i++) {
       
@@ -150,22 +104,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               };
               ?>
             </select>
-            <!--Cierre de la lista <select>-->
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
-          <!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
           <td>
-            <!--La etiqueta select (<select>) de HTML representa un control que muestra un menú de opciones-->
-            <!--Inicio de la lista <select>-->
-            <!--lista de selección select - required => indica que la caja de texto es requerida (obligatoria) <select>-->
-            <!--lista de selección select - name => permite a un script acceder a su contenido <select>-->
-            <!--lista de selección select - id => permite a un script o al css acceder a su contenido <select>-->
-            <!--lista de selección select - class => permite a una clase de css acceder a su contenido <select>-->
             <select name="Comp_id" id="Comp_id" required >
-              <!--Inicio de etiqueta de opciones de lista <option>-->
-              <!--Valor de la opción - value => valor de la opción <option>-->
               <?php
               for ($i = 0; $i < count($resultCompany); $i++) {
 
@@ -177,20 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               };
               ?>
             </select>
-            <!--Cierre de la lista <select>-->
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
-          <!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
           <td>
-            <!--La etiqueta select (<select>) de HTML representa un control que muestra un menú de opciones-->
-            <!--Inicio de la lista <select>-->
-            <!--lista de selección select - required => indica que la caja de texto es requerida (obligatoria) <select>-->
-            <!--lista de selección select - name => permite a un script acceder a su contenido <select>-->
-            <!--lista de selección select - id => permite a un script o al css acceder a su contenido <select>-->
-            <!--lista de selección select - class => permite a una clase de css acceder a su contenido <select>-->
             <select name="Country_id" id="Country_id" required >
-              <!--Inicio de etiqueta de opciones de lista <option>-->
-              <!--Valor de la opción - value => valor de la opción <option>-->
               <?php
               for ($i = 0; $i < count($resultCountry); $i++) {
 
@@ -202,53 +132,21 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               };
               ?>
             </select>
-            <!--Cierre de la lista <select>-->
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
         </tr>
-        <!--Cierre de fila para de la tabla - etiqueta de fila <tr>-->
-
-
-        <!--Inicio de fila para de la tabla - etiqueta de fila <tr>-->
         <tr>
-          <!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
           <td colspan="3">
-            <!--Caja de texto etiqueta input - type => tipo submit <input>-->
-            <!--Caja de texto etiqueta input - value => valor de la caja de texto <input>-->
-            <!--Caja de texto etiqueta input - required => indica que la caja de texto es requerida (obligatoria) <input>-->
-            <!--Caja de texto etiqueta input - name => permite a un script acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - id => permite a un script o al css acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - class => permite a una clase de css acceder a su contenido <input>-->
-      
 
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
-              <!--Inicio de columna para de la tabla - etiqueta de columna <td>-->
           <td colspan="3">
-            <!--Caja de texto etiqueta input - type => tipo submit <input>-->
-            <!--Caja de texto etiqueta input - value => valor de la caja de texto <input>-->
-            <!--Caja de texto etiqueta input - required => indica que la caja de texto es requerida (obligatoria) <input>-->
-            <!--Caja de texto etiqueta input - name => permite a un script acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - id => permite a un script o al css acceder a su contenido <input>-->
-            <!--Caja de texto etiqueta input - class => permite a una clase de css acceder a su contenido <input>-->
             <button type="submit" value="" id="btnSubmit" name="btnSubmit" class="btnSubmit"><img src="../../assets/img/icons/edit.png">
             </button>
-
           </td>
-          <!--Cierre de columna para de la tabla - etiqueta de columna <td>-->
         </tr>
 
       </table>
-      <!--Cierre de tabla para los contenidos del formulario - etiqueta de tabla <table>-->
- 
-   
-
     </form>
-    <!--Cierre de formulario <form>-->
   </div>
-  <!--Cierre de división etiqueta </div>-->
-
-  <!--Etiqueta de enlace con la logíca de javascript <script>-->
   <script src="../assets/js/main.js" type="javascript"></script>
 </body>
 
