@@ -1,15 +1,7 @@
 <?php
-/*-- 
-#Ahutor:DIEGO CASALLAS
-#Busines: 
-#Date:19/07/2023
-#Description:MySQL and PHP actions to insert users
-#Vesion:1.0
---*/
 include("../../config/config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-/**These variables get the data from the form*/  
   $userName = $_REQUEST['User_name'];
   $userLastName = $_REQUEST['User_lastName'];
   $userDocument = $_REQUEST['User_document'];
@@ -24,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   $documentTypeId = $_REQUEST['DocumentType_id'];
   $genderTypeId = $_REQUEST['GenderType_id'];
 
-  //Prepare and bind insert mysql 
   $stmt = $connect->prepare("INSERT INTO user 
   (User_name, 
   User_lastName, 
@@ -44,6 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   echo "New records created successfully";
   $stmt->close();
   $connect->close();
-  header('Location: ../../view/user/');
+  header('Location: ../../view/client/');
   exit;
 }

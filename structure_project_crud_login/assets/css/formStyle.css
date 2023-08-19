@@ -1,24 +1,13 @@
-/*
-Author:DIEGO CASALLAS
-Date:12/06/2023
-Descriptions:This css 
-*/
-
-/*Estilo general*/
-
-/*Carga de tipo de Fuente*/
 @font-face {
   font-family: Roboto;
   src: url('../fonts/Roboto-Regular.ttf');
 }
-/*Estilo aplicado al html y body*/
 html,body{
   width: auto;
   height: 100%;
   font-family: Roboto;
   text-transform:uppercase ;
 }
-/*Estilo aplicado a todos los input*/
 
 input{
   text-transform:uppercase ;
@@ -36,17 +25,14 @@ input:hover{
   color: white;
   cursor: pointer;
 }
-/*Estilo aplicado a todos los input de tipo text*/
 
 input[type=text]{
 
 }
-/*Estilo aplicado a todos los input de tipo email*/
 
 input[type=email]{
     
 }
-/*Estilo aplicado a todos los select*/
 
 select{
   border-radius: 5px;
@@ -59,7 +45,6 @@ select:focus{
   color: white;
 }
 
-/*Clase primera sección*/
 .sectionOne{
   background: rgb(209, 209, 209);
   width: 90%;

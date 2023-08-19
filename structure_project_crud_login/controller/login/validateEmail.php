@@ -1,11 +1,4 @@
 <?php
-/*-- 
-#Ahutor:DIEGO CASALLAS
-#Busines: 
-#Date:27/07/2023
-#Description:MySQL and PHP actions to select user email
-#Vesion:1.0
---*/
 include("../../config/config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
