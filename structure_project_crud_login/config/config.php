@@ -1,14 +1,5 @@
 <?php
 
-#Ahutor:DIEGO CASALLAS
-#Busines: 
-#Date:14/07/2023
-#Description:Connect database
-#Vesion:1.0
-
-/***********/
-/*Variables*/
-
 $server = "localhost";
 $user = "root";
 $pass = "";

@@ -21,7 +21,6 @@ if (!$result = $connect->query($sql)) {
   <link href="../../assets/css/style.css" rel="stylesheet" />
 
   <title>SISTEMA DE VENTAS EN LÍNEA </title>
-  <!--Include css php-->
   <?php
   include('../assets/css/css.php');
   ?>
@@ -87,13 +86,9 @@ if (!$result = $connect->query($sql)) {
  
     </form>
   </div>
-  <!--End Container-->
-  <!--Container footer-->
   <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
     <a href="#">www.miempresa.com</a>
   </div>
-  <!--End Container footer-->
-  <!--Include js php-->
   <?php
   include('../assets/js/js.php');
   ?>

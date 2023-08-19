@@ -1,15 +1,7 @@
 <?php
-/*-- 
-#Ahutor:DIEGO CASALLAS
-#Busines: 
-#Date:19/07/2023
-#Description:MySQL and PHP actions to insert users
-#Vesion:1.0
---*/
 include("../../config/config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-/**These variables get the data from the form*/  
   $clientName = $_REQUEST['Client_name'];
   $clientIdentification = $_REQUEST['Client_identification'];
   $clientEmail = $_REQUEST['Client_email'];
@@ -23,8 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   $compId = $_REQUEST['Comp_id'];
   $countryId  = $_REQUEST['Country_id'];
 
-
-  //Prepare and bind insert mysql 
   $stmt = $connect->prepare("INSERT INTO client 
   (Client_name, 
   Client_identification, 
