@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         $stmt->execute();
-        echo "New record created successfully";
+        echo "New record created or updated successfully";
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }

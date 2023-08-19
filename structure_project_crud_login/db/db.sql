@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-08-2023 a las 22:32:10
+-- Tiempo de generación: 19-08-2023 a las 22:41:48
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -26,32 +26,51 @@ DELIMITER $$
 -- Procedimientos
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertClientWithDefaults` (IN `p_ClientName` VARCHAR(255), IN `p_ClientIdentification` VARCHAR(20), IN `p_ClientEmail` VARCHAR(255), IN `p_ClientPhone` VARCHAR(15), IN `p_ClientAddress` VARCHAR(255))   BEGIN
-    -- Insertar el cliente con valores fijos
-    INSERT INTO client (
-        Client_name,
-        Client_identification,
-        Client_email,
-        Client_phone,
-        Client_address,
-        DocumentType_id,
-        Comp_id,
-        Status_id,
-        Country_id,
-        updated_at,
-        created_at
-    ) VALUES (
-        p_ClientName,
-        p_ClientIdentification,
-        p_ClientEmail,
-        p_ClientPhone,
-        p_ClientAddress,
-        1, -- DocumentType_id siempre 1
-        1, -- Comp_id siempre 1
-        1, -- Status_id siempre 1
-        1, -- Country_id siempre 1
-        NOW(),
-        NOW()
-    );
+    DECLARE existing_id INT;
+
+    -- Verificar si el Client_identification ya existe
+    SELECT Client_id INTO existing_id
+    FROM client
+    WHERE Client_identification = p_ClientIdentification;
+
+    IF existing_id IS NOT NULL THEN
+        -- Actualizar los datos del cliente existente
+        UPDATE client
+        SET
+            Client_name = p_ClientName,
+            Client_email = p_ClientEmail,
+            Client_phone = p_ClientPhone,
+            Client_address = p_ClientAddress,
+            updated_at = NOW()
+        WHERE Client_id = existing_id;
+    ELSE
+        -- Insertar un nuevo cliente con valores fijos
+        INSERT INTO client (
+            Client_name,
+            Client_identification,
+            Client_email,
+            Client_phone,
+            Client_address,
+            DocumentType_id,
+            Comp_id,
+            Status_id,
+            Country_id,
+            updated_at,
+            created_at
+        ) VALUES (
+            p_ClientName,
+            p_ClientIdentification,
+            p_ClientEmail,
+            p_ClientPhone,
+            p_ClientAddress,
+            1, -- DocumentType_id siempre 1
+            1, -- Comp_id siempre 1
+            1, -- Status_id siempre 1
+            1, -- Country_id siempre 1
+            NOW(),
+            NOW()
+        );
+    END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_client` ()   BEGIN
@@ -1251,7 +1270,7 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`Client_id`, `Client_name`, `Client_identification`, `Client_email`, `Client_phone`, `Client_address`, `DocumentType_id`, `Comp_id`, `Status_id`, `Country_id`, `updated_at`, `created_at`) VALUES
-(1, 'juan', '1023372763', 'dsapopop@gmai.com', 'sadasd', 'calle falsa 98', 1, 1, 1, 1, '2023-08-19 15:12:00', '2023-08-19 15:12:00');
+(1, 'alejandro', '1023372763', 'dsapopop@gmai.com', '124516546', 'calle 100501', 1, 1, 1, 1, '2023-08-19 15:40:49', '2023-08-19 15:12:00');
 
 -- --------------------------------------------------------
 
@@ -1646,7 +1665,7 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT de la tabla `client`
 --
 ALTER TABLE `client`
-  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `company`

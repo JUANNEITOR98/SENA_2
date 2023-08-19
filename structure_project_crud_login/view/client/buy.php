@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $clientPhone = $_POST['Client_phone'];
     $clientAddress = $_POST['Client_address'];
 
-    $stmt = $connect->prepare("CALL InsertClientWithDefaults(?, ?, ?, ?, ?)");
+    $stmt = $connect->prepare("CALL InsertOrUpdateClient(?, ?, ?, ?, ?)");
     $stmt->bind_param(
         "sssss",
         $clientName,
