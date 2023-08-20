@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-08-2023 a las 22:41:48
+-- Tiempo de generación: 20-08-2023 a las 21:42:00
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -71,6 +71,22 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertClientWithDefaults` (IN `p_Cl
             NOW()
         );
     END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LoginUser` (IN `userEmail` VARCHAR(255), IN `userDocument` VARCHAR(255))   BEGIN
+    DECLARE authenticatedUser VARCHAR(255);
+    
+    -- Verificar las credenciales del usuario
+    SELECT User_email INTO authenticatedUser
+    FROM user
+    WHERE User_email = userEmail AND User_document = userDocument;
+
+    -- Establecer la variable de sesión para el usuario autenticado
+    SET @authenticatedUser = authenticatedUser;
+    
+    -- Devolver el resultado
+    SELECT authenticatedUser;
+    
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_client` ()   BEGIN
@@ -1270,7 +1286,9 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`Client_id`, `Client_name`, `Client_identification`, `Client_email`, `Client_phone`, `Client_address`, `DocumentType_id`, `Comp_id`, `Status_id`, `Country_id`, `updated_at`, `created_at`) VALUES
-(1, 'alejandro', '1023372763', 'dsapopop@gmai.com', '124516546', 'calle 100501', 1, 1, 1, 1, '2023-08-19 15:40:49', '2023-08-19 15:12:00');
+(1, 'Admin', '123456789', 'admin@gmail.com', '123456789', 'calle admin', 1, 1, 1, 1, '2023-08-20 14:00:01', '2023-08-20 13:59:13'),
+(2, 'juan', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'calle falsa 98', 1, 1, 1, 1, '2023-08-20 14:02:54', '2023-08-20 14:02:54'),
+(3, 'rocio', '53088731', 'rocioacevedo2409@gmail.com', '3212162187', 'calle falsa 78', 1, 1, 1, 1, '2023-08-20 14:15:12', '2023-08-20 14:15:12');
 
 -- --------------------------------------------------------
 
@@ -1432,7 +1450,10 @@ INSERT INTO `product` (`Product_id`, `Product_name`, `Product_descriptions`, `Pr
 (3, 'Pizza', 'Una pizza perfecta para una persona', 'CO_005', '25000', 'https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg', 1, 1),
 (4, 'Pizza Familiar', 'Una pizza perfecta para una Familia q se ama', 'CO_006', '25000', 'https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg', 1, 1),
 (5, 'Perro Caliente', 'Un perro caliente rico y listo para comer', 'CO_001', '45000', 'https://images-gmi-pmc.edge-generalmills.com/f5a517df-12c8-4d55-aa70-c882d99122e0.jpg', 1, 1),
-(6, 'Coca-Cola', 'Una Coca-Cola fria lista para un dia de calor', 'CO_002', '45000', 'https://i0.wp.com/tucochinito.com/wp-content/uploads/2019/07/Coca-de-vidrio.jpg', 1, 1);
+(6, 'Coca-Cola', 'Una Coca-Cola fria lista para un dia de calor', 'CO_002', '45000', 'https://i0.wp.com/tucochinito.com/wp-content/uploads/2019/07/Coca-de-vidrio.jpg', 1, 1),
+(7, 'Lasagña', 'la lasagña mas rica de todas', 'CO_007', '15000', 'https://cdn.colombia.com/gastronomia/2011/08/25/lasagna-3685.jpg', 1, 1),
+(8, 'Sandwich', 'Un sandwich riquisimo para cualquier momento', 'CO_008', '5000', 'https://www.comedera.com/wp-content/uploads/2023/03/sandwich-submarino-shutterstock_2160373737.jpg', 1, 1),
+(9, 'Un pollo asado', 'Un pollo asado para toda la familia ', 'CO_009', '25000', 'https://s3.abcstatics.com/media/gurmesevilla/2010/03/pollo-asado-citricos-1920.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1545,15 +1566,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`User_id`, `User_name`, `User_document`, `User_email`, `User_cellphone`, `User_lastName`, `User_password`, `User_user`, `User_birthdate`, `Status_id`, `DocumentType_id`, `GenderType_id`) VALUES
-(1, 'juan felipe ', '100472605', 'felipe@gmail.com', '3012528242', 'casallas ', '$2y$10$xIgQXNRHgHd/5A7/kpbX8uUpVMyfdaKDatjSgYcUorESu9fMWrlUa', 'felipe@gmail.com', '2023-07-20', 1, 1, 1),
-(2, 'DIego', '80857854', 'diegohernando@gmail.com', '3002541785', 'casallas', '$2y$10$wd3yR7eXY4Us0/kNwxziteq6zEnrMZZL3lXzpu4.nWjNuL3ZSPv.G', 'diegohernando@gmail.com', '1986-02-02', 1, 1, 1),
-(3, 'Daniela ', '1021987452', 'daniela123@gmail.com', '3158565830', 'Villalba ', '$2y$10$SjLQu2msRedOGUDdv.qemuAKjelSBABt4uNSsvM0sPlXt.miy2qD.', 'Daniela123@gmail.com', '0008-05-15', 1, 1, 1),
-(4, 'Diego', '805414141', 'diegocasallas@gmail.com', '3012528745', 'casallas', '$2y$10$.5rTQzxzdmn.K7G6TtDZTOgt/LO3Rr3y5RoZJIkNqazYbus1HAa8S', 'diegocasallas@gmail.com', '2023-07-28', 1, 1, 1),
-(5, 'Carlos', '10312528414', 'carlos@gmail.com', '3002514785', 'Rodriguez', '$2y$10$FiAGm0gOhNRmeEOpXqjKmO.mULReLwJygX.7VfvwpiqMXx8aS2lsi', 'carlos@gmail.com', '2023-07-29', 1, 1, 1),
-(6, 'JUAN', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'GARCIA', '$2y$10$H.O5t91aqunH/z4POfUvz.e526jGnSz8Lmu4/9NyYSOhWBHtAgYO2', 'garciaacevedojuandavid@gmail.com', '2006-07-09', 1, 2, 1),
-(7, 'BAKI', '123456789', 'BAKIHANMA123@GMAIL.COM', '2587445442', 'HANMA', '$2y$10$/7hveI1ppS9oPnmRwBjXLuoxnlnWbCSIuyPMelQp15AJzJOc9u7v2', 'BAKIHANMA123@GMAIL.COM', '1950-02-18', 1, 1, 1),
-(8, 'marilu', '3212162187', 'lulita-hernandez@hotmail.com', '159753', 'garcia', '$2y$10$Q/dDtou.M4Pi5jhIxD.eW.ECDx6hhc2gVawQktD0CkyJ2cZdXv8IK', 'lulita-hernandez@hotmail.com', '1995-07-18', 1, 1, 2),
-(9, 'Yujiro', '48464684', 'elpadredelano@gmail.com', '54816547681', 'Hanma', '$2y$10$a4BtYQ8RKqHDPKB7eKi5C.IfT0JQYQScLJfqiXT6B7xZbT8VZd2BG', 'elpadredelano@gmail.com', '1945-06-04', 1, 1, 1);
+(1, 'Admin', '123456789', 'Admin@gmail.com', '123456789', 'Admin', '$2y$10$wX9TArwUiJVxB/BRJ7KINe6RIVi9mOfUAOjASMo14zMl73R.Ak.Um', 'admin@gmail.com', '2000-01-01', 1, 1, 1),
+(2, 'JUAN', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'GARCIA', '$2y$10$t7c/Umaz1LvzfDUyPGr.UeAWcAtzvUF4/FRzro2MhmttaldMfKesi', 'garciaacevedojuandavid@gmail.com', '2006-07-09', 1, 2, 1),
+(3, 'rocio', '53088731', 'rocioaceevedo2409@gmail.com', '3212162187', 'acevedo', '$2y$10$tA5t7wKj1Dd/pGUt.EtQkOOyogl8hb2uaPsesmL9iQLUUbBAN96q6', 'rocioacevedo2409@gmail.com', '1983-10-24', 1, 1, 2);
 
 --
 -- Índices para tablas volcadas
@@ -1665,7 +1680,7 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT de la tabla `client`
 --
 ALTER TABLE `client`
-  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `company`
@@ -1701,7 +1716,7 @@ ALTER TABLE `gendertype`
 -- AUTO_INCREMENT de la tabla `product`
 --
 ALTER TABLE `product`
-  MODIFY `Product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `profile`
@@ -1731,7 +1746,7 @@ ALTER TABLE `typeproduct`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

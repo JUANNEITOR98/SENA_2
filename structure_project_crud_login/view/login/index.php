@@ -1,16 +1,36 @@
 <?php
+session_start();
 include('../../config/config.php');
 
-$sql = "CALL sp_select_all_products()";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $userEmail = $_POST['User_user'];
+    $userDocument = $_POST['User_document'];
 
-if (!$result = $connect->query($sql)) {
-  echo "Falló la multiconsulta: (" . $connect->errno . ") " . $connect->error;
-} else {
-  $resultQuery = $result->fetch_all(MYSQLI_NUM);
+    // Preparar la llamada al procedimiento almacenado
+    $stmt = $connect->prepare("CALL LoginUser(?, ?)");
+    $stmt->bind_param("ss", $userEmail, $userDocument);
+
+    // Ejecutar el procedimiento almacenado
+    if ($stmt->execute()) {
+        // Vincular el resultado del procedimiento
+        $stmt->bind_result($authenticatedUser);
+        $stmt->fetch();
+
+        if ($authenticatedUser) {
+            $_SESSION['user_email'] = $authenticatedUser;
+            header("Location: ../client/index.php");
+        } else {
+            echo "Credenciales inválidas. Por favor, intenta de nuevo.";
+        }
+    } else {
+        echo "Error al ejecutar el procedimiento almacenado: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $connect->close();
 }
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,37 +82,32 @@ if (!$result = $connect->query($sql)) {
 </div>
     </div>
 
-    <div class="header-content container">
-
-    </div>
-  </header>
-
-  <div class="container">
-    <form action="../../controller/login/login.php" method="POST" >
-      <div class="form-group">
-        <label for="User_user">Email Users</label>
-        <input type="email" class="form-control" id="User_user" name="User_user" aria-describedby="emailHelp"
-          placeholder="Enter user" required>
-        <small id="emailHelp" class="form-text text-muted">Nunca compartiremos su correo electrónico con nadie más.</small>
-      </div>
-      <div class="form-group">
-        <label for="User_password">Password</label>
-        <input type="password" class="form-control" id="User_password" name="User_password" placeholder="Password" required >
-      </div>
-      <div class="form-group m-2">
-        
-      <button type="submit" class="btn btn-primary w-100">INICIAR SESIÓN</button>
-      </div>
- 
+    <div class="container">
+    <form action="index.php" method="POST">
+        <div class="form-group">
+            <label for="User_user">Email Users</label>
+            <input type="email" class="form-control" id="User_user" name="User_user" aria-describedby="emailHelp"
+                placeholder="Enter user" required>
+            <small id="emailHelp" class="form-text text-muted">Nunca compartiremos su correo electrónico con nadie más.</small>
+        </div>
+        <div class="form-group">
+            <label for="User_document">Document</label>
+            <input type="text" class="form-control" id="User_document" name="User_document" placeholder="Document" required>
+        </div>
+        <div class="form-group m-2">
+            <button type="submit" class="btn btn-primary w-100">INICIAR SESIÓN</button>
+        </div>
     </form>
-  </div>
-  <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
-            <a href="index.php">www.lasazondejuanita.com</a>
-    </div>
 
-  <?php
-  include('../assets/js/js.php');
-  ?>
+    <div class="form-group m-2">
+    
+    <?php if (!empty($loginMessage)) : ?>
+        <div class="alert alert-success mt-3">
+            <?php echo $loginMessage; ?>
+        </div>
+    <?php endif; ?>
+
+  <?php include('../assets/js/js.php'); ?>
 </body>
 
 </html>

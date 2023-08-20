@@ -72,7 +72,7 @@
     <div class="ofert-img">
       <img src="/structure_project_crud_login/assets/img/images/s1.png" alt="" width="100" height="100">
     </div>
-    <h3>Los mejores alimentos del mundo</h3>
+    <h3>Vegetales totalmente nuevos</h3>
     <a href="products.php">leer mas</a>
   </div>
 
@@ -80,7 +80,7 @@
     <div class="ofert-img">
       <img src="/structure_project_crud_login/assets/img/images/s2.png" alt="" width="100" height="100">
     </div>
-    <h3>Los mejores alimentos del mundo</h3>
+    <h3>comida rapida a tu gusto</h3>
     <a href="products.php">leer mas</a>
   </div>
 
@@ -88,7 +88,7 @@
     <div class="ofert-img">
       <img src="/structure_project_crud_login/assets/img/images/s3.png" alt="" width="100" height="100">
     </div>
-    <h3>Los mejores alimentos del mundo</h3>
+    <h3>carnes de todo tipo</h3>
     <a href="products.php">leer mas</a>
   </div>
 </section>

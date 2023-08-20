@@ -223,6 +223,27 @@ $resultStatus = $resultArray[2];
 </body>
 
 </html>
+
+
+<script>
+var cont = 0;
+var newArraProdcutSelect = [];
+
+function addProduct(id) {
+    cont = cont + 1;
+    document.getElementById('numProduct').innerHTML = cont;
+    alert("Producto Id: " + id + " Cantidad de Productos: " + cont);
+    newArraProdcutSelect[cont] = id;
+}
+function sendDataToAnotherPage() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "pagina_destino.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("data=" + JSON.stringify(newArraProdcutSelect));
+}
+
+  </script>
+  
 <?php
 $connect->close();
 ?>

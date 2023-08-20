@@ -79,9 +79,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <p>MUCHAS GRACIAS POR TU COMPRA.</p>
   <button class="btn" onclick="window.location.href='index.php'">Volver al inicio</button>
 </div>
-<div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
-            <a href="index.php">www.lasazondejuanita.com</a>
-    </div>
-
 </body>
 </html>
