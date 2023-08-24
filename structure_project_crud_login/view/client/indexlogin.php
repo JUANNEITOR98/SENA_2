@@ -42,8 +42,7 @@
       <nav class="navbar">
         <ul>
           <li><a href="index.php">Inicio</a></li>
-          <li><a href="create.php">Registrarse</a></li>
-          <li><a href="../login/index.php">Login</a></li>
+          <li><a href="index.php">cerrar sesion</a></li>
           <li><a href="products.php">todos los productos</a></li>
         </ul>
       </nav>

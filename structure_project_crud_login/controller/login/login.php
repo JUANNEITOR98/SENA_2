@@ -18,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $_SESSION["newsession"]= $resultQuery[0][1];
         echo ("</br>Ok: Login succeeds");
-        $routeResut="Location: ../../view/home/";
+        $routeResut="Location: ../../view/indexlogin.php/";
+        header('Local: ../../view/indexlogin.php');
         
       } else {
         echo ("</br>Error: Password and User");

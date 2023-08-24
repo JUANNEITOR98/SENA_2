@@ -38,7 +38,7 @@
         </tr>
         <tr>
           <td>
-            <a href="#">CAMBIAR CONTRASEÑA</a>
+            <a href="#"></a>
           </td>
         </tr>
         <tr>
@@ -55,7 +55,7 @@
     </div>
 
   <script src="../../assets/js/form.js" ></script>
-
+  
 
 </body>
 
