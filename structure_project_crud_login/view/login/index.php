@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($authenticatedUser) {
             $_SESSION['user_email'] = $authenticatedUser;
-            header("Location: ../client/index.php");
+            header("Location:  ../../view/client/logueado.php");
         } else {
             echo "Credenciales inválidas. Por favor, intenta de nuevo.";
         }
