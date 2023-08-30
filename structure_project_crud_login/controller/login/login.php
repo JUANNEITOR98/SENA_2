@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $UserPassword = $_REQUEST['User_password'];
 
   $sql = "CALL sp_select_user_email('" . $UserUser . "'); ";
-  $routeResut="Location: ../../view/client/logueado.php";
+  $routeResut="Location: ../../view/home/";
   if ($result = $connect->query($sql)) {
     $resultQuery = $result->fetch_all(MYSQLI_NUM);
 
@@ -18,16 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $_SESSION["newsession"]= $resultQuery[0][1];
         echo ("</br>Ok: Login succeeds");
-        $routeResut=" ../../view/client/logueado.php";
+        $routeResut="Location: ../../view/home/";
         
       } else {
         echo ("</br>Error: Password and User");
-        $routeResut="Location:  ../../view/client/logueado.php";
+        $routeResut="Location: ../../view/login/";
       }
 
     } else {
       echo ("</br>Error: User name does not exist");
-      $routeResut="Location:  ../../view/client/logueado.php";
+      $routeResut="Location: ../../view/login/";
     }
 
   }
