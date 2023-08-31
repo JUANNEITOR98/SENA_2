@@ -43,7 +43,7 @@ $resultStatus = $resultArray[2];
 <div class="top-bar container d-flex justify-content-between align-items-center">
   <div>
 <a href="index.php" class="logo">
-      <img src="../../assets\img\icons\logo_temporal.png" alt="Bootstrap" width="90" height="72">
+      <img src="../../assets\img\icons\logo_oficial.png" alt="Bootstrap" width="90" height="72">
     </a>
 </div>  
 <nav class="navbar">
