@@ -6,13 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userEmail = $_POST['User_user'];
     $userDocument = $_POST['User_document'];
 
-    // Preparar la llamada al procedimiento almacenado
     $stmt = $connect->prepare("CALL LoginUser(?, ?)");
     $stmt->bind_param("ss", $userEmail, $userDocument);
 
-    // Ejecutar el procedimiento almacenado
     if ($stmt->execute()) {
-        // Vincular el resultado del procedimiento
         $stmt->bind_result($authenticatedUser);
         $stmt->fetch();
 

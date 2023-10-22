@@ -132,7 +132,7 @@ $resultStatus = $resultArray[2];
         <div class="col-4">
           <div class="form-floating">
             <select class="form-select" id="DocumentType_id" name="DocumentType_id" aria-label="Floating label select example">
-              <option selected>Open this select menu</option>
+              <option selected>Selecciona una opcion</option>
 
               <?php
                 for ($i = 0; $i < count($resultDocumentType); $i++) {
@@ -148,7 +148,7 @@ $resultStatus = $resultArray[2];
         <div class="col-4">
           <div class="form-floating">
             <select class="form-select" id="GenderType_id" name="GenderType_id" aria-label="Floating label select example">
-              <option selected>Open this select menu</option>
+              <option selected>Selecciona una opcion</option>
 
               <?php
                  
@@ -164,7 +164,7 @@ $resultStatus = $resultArray[2];
         <div class="col-4">
           <div class="form-floating">
             <select class="form-select" id="Status_id" name="Status_id" aria-label="Floating label select example">
-              <option selected>Open this select menu</option>
+              <option selected>Selecciona una opcion</option>
               <?php
                 for ($i = 0; $i < count($resultStatus); $i++) {
                   echo '<option value="' . $resultStatus[$i][0] . '">' . $resultStatus[$i][1] . '</option>';
@@ -172,10 +172,9 @@ $resultStatus = $resultArray[2];
                 ;
                 ?>
             </select>
-            <label for="Status_id">Estado</label>
+            <label for="Status_id">Rol</label>
           </div>
         </div>
-
 
         <h3>SEGURIDAD</h3>
 
