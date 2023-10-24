@@ -10,8 +10,6 @@
   }
   if(!isset($_SESSION["newsession"])){
     echo("");
-  }else{
-    
   }
 
 ?>
@@ -33,29 +31,21 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
-<div class="top-bar container d-flex justify-content-between align-items-center">
-  <div>
-<a href="index.php" class="logo">
-      <img src="../../assets\img\icons\logo_oficial.png" alt="Bootstrap" width="90" height="72">
-    </a>
-</div>  
-      <nav class="navbar">
-        <ul>
-          <li><a href="index.php">Inicio</a></li>
-          <li><a href="create.php">Registrarse</a></li>
-          <li><a href="../login/index.php">Login</a></li>
-          <li><a href="products.php">todos los productos</a></li>
-        </ul>
-      </nav>
-      <div id="carrito">
-    <img src="../../assets\img\images\car.svg" alt="car" id="img-carrito">
-    <h6 id="numProduct" >0</h6>
-    <div id="lista-carrito">
-        <a href="../login/index.php" id="Comprar" class="btn-3">Inicia sesion para comprar</a>
-    </div>
+<div id="header">
+  <ul>
+    <?php
+    $dataRol = [
+      "admin" => 'administridador_header',
+      'client' => 'cliente_header',
+      'guest' => 'no_logueado'
+    ];
 
-  </form>
+    require_once('../assets/header/' . $dataRol[(isset($_GET['r']((isset($_GET['r'])  && array_key_exists()), $array))) ? $_GET['r'] : "guest"] . '.php');
+        ?>
+    </ul>
 </div>
+
+
 </div>
     </div>
 
