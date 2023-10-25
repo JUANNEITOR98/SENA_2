@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-08-2023 a las 18:16:58
+-- Tiempo de generación: 26-10-2023 a las 01:39:02
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -25,6 +25,70 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertClientWithDefaults` (IN `p_ClientName` VARCHAR(255), IN `p_ClientIdentification` VARCHAR(20), IN `p_ClientEmail` VARCHAR(255), IN `p_ClientPhone` VARCHAR(15), IN `p_ClientAddress` VARCHAR(255))   BEGIN
+    DECLARE existing_id INT;
+
+    -- Verificar si el Client_identification ya existe
+    SELECT Client_id INTO existing_id
+    FROM client
+    WHERE Client_identification = p_ClientIdentification;
+
+    IF existing_id IS NOT NULL THEN
+        -- Actualizar los datos del cliente existente
+        UPDATE client
+        SET
+            Client_name = p_ClientName,
+            Client_email = p_ClientEmail,
+            Client_phone = p_ClientPhone,
+            Client_address = p_ClientAddress,
+            updated_at = NOW()
+        WHERE Client_id = existing_id;
+    ELSE
+        -- Insertar un nuevo cliente con valores fijos
+        INSERT INTO client (
+            Client_name,
+            Client_identification,
+            Client_email,
+            Client_phone,
+            Client_address,
+            DocumentType_id,
+            Comp_id,
+            Status_id,
+            Country_id,
+            updated_at,
+            created_at
+        ) VALUES (
+            p_ClientName,
+            p_ClientIdentification,
+            p_ClientEmail,
+            p_ClientPhone,
+            p_ClientAddress,
+            1, -- DocumentType_id siempre 1
+            1, -- Comp_id siempre 1
+            1, -- Status_id siempre 1
+            1, -- Country_id siempre 1
+            NOW(),
+            NOW()
+        );
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LoginUser` (IN `userEmail` VARCHAR(255), IN `userDocument` VARCHAR(255))   BEGIN
+    DECLARE authenticatedUser VARCHAR(255);
+    
+    -- Verificar las credenciales del usuario
+    SELECT User_email INTO authenticatedUser
+    FROM user
+    WHERE User_email = userEmail AND User_document = userDocument;
+
+    -- Establecer la variable de sesión para el usuario autenticado
+    SET @authenticatedUser = authenticatedUser;
+    
+    -- Devolver el resultado
+    SELECT authenticatedUser;
+    
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_select_all_client` ()   BEGIN
 SELECT  Client_id,Client_name,Client_identification,Client_email,Client_phone,Client_address,DT.DocumentType_id,ST.Status_id,ST.Status_name, DT.DocumentType_name FROM client CLI
 INNER JOIN status ST ON CLI.Status_id=ST.Status_id
@@ -1217,6 +1281,15 @@ CREATE TABLE `client` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `client`
+--
+
+INSERT INTO `client` (`Client_id`, `Client_name`, `Client_identification`, `Client_email`, `Client_phone`, `Client_address`, `DocumentType_id`, `Comp_id`, `Status_id`, `Country_id`, `updated_at`, `created_at`) VALUES
+(1, 'Admin', '123456789', 'admin@gmail.com', '123456789', 'calle admin', 1, 1, 1, 1, '2023-08-20 14:00:01', '2023-08-20 13:59:13'),
+(2, 'juan', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'calle falsa 98', 1, 1, 1, 1, '2023-08-20 14:02:54', '2023-08-20 14:02:54'),
+(3, 'rocio', '53088731', 'rocioacevedo2409@gmail.com', '3212162187', 'calle falsa 78', 1, 1, 1, 1, '2023-08-20 14:15:12', '2023-08-20 14:15:12');
+
 -- --------------------------------------------------------
 
 --
@@ -1377,7 +1450,10 @@ INSERT INTO `product` (`Product_id`, `Product_name`, `Product_descriptions`, `Pr
 (3, 'Pizza', 'Una pizza perfecta para una persona', 'CO_005', '25000', 'https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg', 1, 1),
 (4, 'Pizza Familiar', 'Una pizza perfecta para una Familia q se ama', 'CO_006', '25000', 'https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg', 1, 1),
 (5, 'Perro Caliente', 'Un perro caliente rico y listo para comer', 'CO_001', '45000', 'https://images-gmi-pmc.edge-generalmills.com/f5a517df-12c8-4d55-aa70-c882d99122e0.jpg', 1, 1),
-(6, 'Coca-Cola', 'Una Coca-Cola fria lista para un dia de calor', 'CO_002', '45000', 'https://i0.wp.com/tucochinito.com/wp-content/uploads/2019/07/Coca-de-vidrio.jpg', 1, 1);
+(6, 'Coca-Cola', 'Una Coca-Cola fria lista para un dia de calor', 'CO_002', '45000', 'https://i0.wp.com/tucochinito.com/wp-content/uploads/2019/07/Coca-de-vidrio.jpg', 1, 1),
+(7, 'Lasagña', 'la lasagña mas rica de todas', 'CO_007', '15000', 'https://cdn.colombia.com/gastronomia/2011/08/25/lasagna-3685.jpg', 1, 1),
+(8, 'Sandwich', 'Un sandwich riquisimo para cualquier momento', 'CO_008', '5000', 'https://www.comedera.com/wp-content/uploads/2023/03/sandwich-submarino-shutterstock_2160373737.jpg', 1, 1),
+(9, 'Un pollo asado', 'Un pollo asado para toda la familia ', 'CO_009', '25000', 'https://s3.abcstatics.com/media/gurmesevilla/2010/03/pollo-asado-citricos-1920.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1420,6 +1496,26 @@ INSERT INTO `region` (`region_id`, `region_name`) VALUES
 (4, 'Región Eje Cafetero - Antioquia'),
 (5, 'Región Pacifico'),
 (6, 'Región Llano');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `descripcion` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `descripcion`) VALUES
+(1, 'administrador', 'es el administrador'),
+(2, 'cliente', 'es el cliente');
 
 -- --------------------------------------------------------
 
@@ -1482,23 +1578,17 @@ CREATE TABLE `user` (
   `User_birthdate` date NOT NULL DEFAULT current_timestamp(),
   `Status_id` int(11) NOT NULL,
   `DocumentType_id` int(11) NOT NULL,
-  `GenderType_id` int(11) NOT NULL
+  `GenderType_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`User_id`, `User_name`, `User_document`, `User_email`, `User_cellphone`, `User_lastName`, `User_password`, `User_user`, `User_birthdate`, `Status_id`, `DocumentType_id`, `GenderType_id`) VALUES
-(1, 'juan felipe ', '100472605', 'felipe@gmail.com', '3012528242', 'casallas ', '$2y$10$xIgQXNRHgHd/5A7/kpbX8uUpVMyfdaKDatjSgYcUorESu9fMWrlUa', 'felipe@gmail.com', '2023-07-20', 1, 1, 1),
-(2, 'DIego', '80857854', 'diegohernando@gmail.com', '3002541785', 'casallas', '$2y$10$wd3yR7eXY4Us0/kNwxziteq6zEnrMZZL3lXzpu4.nWjNuL3ZSPv.G', 'diegohernando@gmail.com', '1986-02-02', 1, 1, 1),
-(3, 'Daniela ', '1021987452', 'daniela123@gmail.com', '3158565830', 'Villalba ', '$2y$10$SjLQu2msRedOGUDdv.qemuAKjelSBABt4uNSsvM0sPlXt.miy2qD.', 'Daniela123@gmail.com', '0008-05-15', 1, 1, 1),
-(4, 'Diego', '805414141', 'diegocasallas@gmail.com', '3012528745', 'casallas', '$2y$10$.5rTQzxzdmn.K7G6TtDZTOgt/LO3Rr3y5RoZJIkNqazYbus1HAa8S', 'diegocasallas@gmail.com', '2023-07-28', 1, 1, 1),
-(5, 'Carlos', '10312528414', 'carlos@gmail.com', '3002514785', 'Rodriguez', '$2y$10$FiAGm0gOhNRmeEOpXqjKmO.mULReLwJygX.7VfvwpiqMXx8aS2lsi', 'carlos@gmail.com', '2023-07-29', 1, 1, 1),
-(6, 'JUAN', '1023372763', 'garciaacevedojuandavid@gmail.com', '3024091464', 'GARCIA', '$2y$10$H.O5t91aqunH/z4POfUvz.e526jGnSz8Lmu4/9NyYSOhWBHtAgYO2', 'garciaacevedojuandavid@gmail.com', '2006-07-09', 1, 2, 1),
-(7, 'BAKI', '123456789', 'BAKIHANMA123@GMAIL.COM', '2587445442', 'HANMA', '$2y$10$/7hveI1ppS9oPnmRwBjXLuoxnlnWbCSIuyPMelQp15AJzJOc9u7v2', 'BAKIHANMA123@GMAIL.COM', '1950-02-18', 1, 1, 1),
-(8, 'marilu', '3212162187', 'lulita-hernandez@hotmail.com', '159753', 'garcia', '$2y$10$Q/dDtou.M4Pi5jhIxD.eW.ECDx6hhc2gVawQktD0CkyJ2cZdXv8IK', 'lulita-hernandez@hotmail.com', '1995-07-18', 1, 1, 2),
-(9, 'Yujiro', '48464684', 'elpadredelano@gmail.com', '54816547681', 'Hanma', '$2y$10$a4BtYQ8RKqHDPKB7eKi5C.IfT0JQYQScLJfqiXT6B7xZbT8VZd2BG', 'elpadredelano@gmail.com', '1945-06-04', 1, 1, 1);
+INSERT INTO `user` (`User_id`, `User_name`, `User_document`, `User_email`, `User_cellphone`, `User_lastName`, `User_password`, `User_user`, `User_birthdate`, `Status_id`, `DocumentType_id`, `GenderType_id`, `role_id`) VALUES
+(1, 'John', '123456789', 'john@example.com', '555-555-5555', 'Doe', 'password123', 'john_doe', '1990-01-01', 1, 2, 1, 2),
+(2, 'admin', '123456789', 'admin@gmail.com', '123456789', 'admin', '123456789', '', '2000-08-09', 1, 1, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -1575,6 +1665,12 @@ ALTER TABLE `region`
   ADD PRIMARY KEY (`region_id`);
 
 --
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `status`
 --
 ALTER TABLE `status`
@@ -1594,7 +1690,8 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `User_email` (`User_email`),
   ADD KEY `user_document_type` (`DocumentType_id`),
   ADD KEY `user_gender_type` (`GenderType_id`),
-  ADD KEY `user_status_type` (`Status_id`);
+  ADD KEY `user_status_type` (`Status_id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -1610,7 +1707,7 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT de la tabla `client`
 --
 ALTER TABLE `client`
-  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `Client_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `company`
@@ -1646,7 +1743,7 @@ ALTER TABLE `gendertype`
 -- AUTO_INCREMENT de la tabla `product`
 --
 ALTER TABLE `product`
-  MODIFY `Product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `profile`
@@ -1659,6 +1756,12 @@ ALTER TABLE `profile`
 --
 ALTER TABLE `region`
   MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `status`
@@ -1676,7 +1779,7 @@ ALTER TABLE `typeproduct`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -1716,6 +1819,7 @@ ALTER TABLE `product`
 ALTER TABLE `user`
   ADD CONSTRAINT `user_document_type` FOREIGN KEY (`DocumentType_id`) REFERENCES `document_type` (`DocumentType_id`),
   ADD CONSTRAINT `user_gender_type` FOREIGN KEY (`GenderType_id`) REFERENCES `gendertype` (`GenderType_id`),
+  ADD CONSTRAINT `user_rol_type` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
   ADD CONSTRAINT `user_status_type` FOREIGN KEY (`Status_id`) REFERENCES `status` (`Status_id`);
 COMMIT;
 

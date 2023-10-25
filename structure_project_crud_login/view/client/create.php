@@ -23,6 +23,29 @@ $resultDocumentType = $resultArray[0];
 $resultGenderType = $resultArray[1];
 $resultStatus = $resultArray[2];
 
+function checkUserRole() {
+  if (isset($_SESSION['user_id'])) {
+      global $db;
+      $user_id = $_SESSION['user_id'];
+      $query = "SELECT role_id FROM user WHERE User_id = $user_id";
+      $result = $db->query($query);
+
+      if ($result) {
+          $row = $result->fetch_assoc();
+          $role_id = $row['role_id'];
+
+          if ($role_id == 1) {
+              return 'administrador';
+          } elseif ($role_id == 2) {
+              return 'cliente';
+          }
+      }
+  }
+  return 'no_logueado';
+}
+
+$role = checkUserRole();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +63,7 @@ $resultStatus = $resultArray[2];
 
 <body><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
+<<<<<<< Updated upstream
 <div class="top-bar container d-flex justify-content-between align-items-center">
   <div>
 <a href="index.php" class="logo">
@@ -70,6 +94,20 @@ $resultStatus = $resultArray[2];
         <a href="#" id="vaciar-carrito" class="btn-3">Vaciar Carrito</a>
     </div>
 
+=======
+  <?php
+if ($role == 'administrador') {
+    // Encabezado para administradores
+    include('../assets/header/administrador_header.php');
+} elseif ($role == 'cliente') {
+    // Encabezado para clientes
+    include('../assets/header/cliente_header.php');
+} else {
+    // Encabezado para usuarios no logueados
+    include('../assets/header/no_logueado.php');
+}
+?>
+>>>>>>> Stashed changes
   </form>
 </div>
 </div>
