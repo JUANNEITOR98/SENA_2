@@ -16,8 +16,6 @@
 
 
 
-<<<<<<< Updated upstream
-=======
     $stmt->close();
     $connect->close();
 }
@@ -44,7 +42,6 @@ function checkUserRole() {
 
 $role = checkUserRole();
 
->>>>>>> Stashed changes
 ?>
 
 <!DOCTYPE html>
@@ -64,32 +61,6 @@ $role = checkUserRole();
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
-<<<<<<< Updated upstream
-<div class="top-bar container d-flex justify-content-between align-items-center">
-  <div>
-<a href="index.php" class="logo">
-      <img src="../../assets\img\icons\logo_temporal.png" alt="Bootstrap" width="90" height="72">
-    </a>
-</div>  
-<nav class="navbar">
-        <ul>
-          <li><a href="index.php">Inicio</a></li>
-          <li><a href="create.php">Registrarse</a></li>
-          <li><a href="../login/index.php">Login</a></li>
-          <li><a href="products.php">todos los productos</a></li>
-        </ul>
-      </nav>
-      <div id="carrito">
-    <img src="/structure_project_crud_login/assets/img/images/car.svg" alt="car" id="img-carrito">
-    <h6 id="numProduct" >0</h6>
-    <div id="lista-carrito">
-        <table>
-            <tbody></tbody>
-        </table>
-        <a href="index.php" id="cancelar" class="btn-3">Cancelar compra</a>
-    </div>
-
-=======
 <?php
 if ($role == 'administrador') {
     // Encabezado para administradores
@@ -102,7 +73,6 @@ if ($role == 'administrador') {
     include('../assets/header/no_logueado.php');
 }
 ?>
->>>>>>> Stashed changes
   </form>
 </div>
 </div>

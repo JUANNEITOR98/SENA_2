@@ -56,37 +56,6 @@ $role = checkUserRole();
 
 <div class="top-bar container d-flex justify-content-between align-items-center">
   <div>
-<<<<<<< Updated upstream
-<a href="index.php" class="logo">
-      <img src="../../assets\img\icons\logo_temporal.png" alt="Bootstrap" width="90" height="72">
-    </a>
-</div>  
-<nav class="navbar">
-        <ul>
-          <li><a href="index.php">Inicio</a></li>
-          <li><a href="create.php">Registrarse</a></li>
-          <li><a href="../login/index.php">Login</a></li>
-          <li><a href="client/index.php">todos los productos</a></li>
-        </ul>
-      </nav>
-      <div id="carrito">
-    <img src="../../assets/img/images/car.svg" alt="car" id="img-carrito">
-    <h6 id="numProduct" >0</h6>
-    <div id="lista-carrito">
-        <table>
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <a href="#" id="vaciar-carrito" class="btn-3">Vaciar Carrito</a>
-    </div>
-
-=======
   <?php
 if ($role == 'administrador') {
     // Encabezado para administradores
@@ -99,7 +68,6 @@ if ($role == 'administrador') {
     include('../assets/header/no_logueado.php');
 }
 ?>
->>>>>>> Stashed changes
   </form>
 </div>
 </div>

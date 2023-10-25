@@ -1,15 +1,3 @@
-<<<<<<< Updated upstream
-<?php
-include('../../config/config.php');
-
-$sql = "CALL sp_select_all_products()";
-
-if (!$result = $connect->query($sql)) {
-  echo "Falló la multiconsulta: (" . $connect->errno . ") " . $connect->error;
-} else {
-  $resultQuery = $result->fetch_all(MYSQLI_NUM);
-}
-=======
 <?php 
 if ($authenticatedUser) {
     // Consulta la base de datos para obtener el User_id del usuario
@@ -69,7 +57,6 @@ function checkUserRole() {
 $role = checkUserRole();
 
 ?>
->>>>>>> Stashed changes
 
 
 ?>
