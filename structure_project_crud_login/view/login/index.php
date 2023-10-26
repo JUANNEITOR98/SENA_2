@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 session_start();
 include('../../config/config.php');
 
@@ -16,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($authenticatedUser) {
             $_SESSION['user_email'] = $authenticatedUser;
-            header("Location:  ../../view/client/logueado.php");
+            header("Location:  ../../assets/header/no_logueado");
         } else {
             echo "Credenciales inválidas. Por favor, intenta de nuevo.";
         }
@@ -24,9 +23,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error al ejecutar el procedimiento almacenado: " . $stmt->error;
     }
 
-$stmt->close();
-$connect->close();
+    $stmt->close();
+    $connect->close();
 }
+
+
+
+function checkUserRole() {
+    if (isset($_SESSION['user_id'])) {
+        global $db;
+        $user_id = $_SESSION['user_id'];
+        $query = "SELECT role_id FROM user WHERE User_id = $user_id";
+        $result = $db->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            $role_id = $row['role_id'];
+
+            if ($role_id == 1) {
+                return 'administrador';
+            } elseif ($role_id == 2) {
+                return 'cliente';
+            }
+        }
+    }
+    return 'no_logueado';
+}
+
+$role = checkUserRole();
+
 ?>
 
 <!DOCTYPE html>
@@ -47,34 +72,19 @@ $connect->close();
 <body>
 <div class="top-bar container d-flex justify-content-between align-items-center">
   <div>
-<a href="index.php" class="logo">
-      <img src="../../assets\img\icons\logo_oficial.png" alt="Bootstrap" width="90" height="72">
-    </a>
-</div>  
-      <nav class="navbar">
-        <ul>
-          <li><a href="../client/index.php">Inicio</a></li>
-          <li><a href="../client/create.php">Registrarse</a></li>
-          <li><a href="../login/index.php">Login</a></li>
-          <li><a href="../client/products.php">todos los productos</a></li>
-        </ul>
-      </nav>
-      <div id="carrito">
-    <img src="/structure_project_crud_login/assets/img/images/car.svg" alt="car" id="img-carrito">
-    <div id="lista-carrito">
-        <table>
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <a href="#" id="vaciar-carrito" class="btn-3">Vaciar Carrito</a>
-    </div>
 
+  <?php
+if ($role == 'administrador') {
+    // Encabezado para administradores
+    include('../assets/header/administrador_header.php');
+} elseif ($role == 'cliente') {
+    // Encabezado para clientes
+    include('../assets/header/cliente_header.php');
+} else {
+    // Encabezado para usuarios no logueados
+    include('../assets/header/no_logueado.php');
+}
+?>
   </form>
 </div>
 </div>

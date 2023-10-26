@@ -35,6 +35,26 @@ function checkUserRole() {
     return 'no_logueado';
 }
 $role = checkUserRole();
+
+function checkUserRole2($db) {
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        $query = "SELECT role_id FROM user WHERE User_id = $user_id";
+        $result = $db->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            $role_id = $row['role_id'];
+
+            if ($role_id == 1) {
+                return 'administrador';
+            } elseif ($role_id == 2) {
+                return 'cliente';
+            }
+        }
+    }
+    return 'no_logueado';
+}
 ?>
 
 
