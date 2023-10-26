@@ -9,7 +9,7 @@
     $resultQuery = $result->fetch_all(MYSQLI_NUM);
   }
   if(!isset($_SESSION["newsession"])){
-    echo(" Si funciono XD");
+    echo(" ");
   }else{
     
   }
@@ -35,29 +35,6 @@ function checkUserRole() {
     return 'no_logueado';
 }
 $role = checkUserRole();
-
-function checkUserRole($db) {
-    if (isset($_SESSION['user_id'])) {
-        $user_id = $_SESSION['user_id'];
-        $query = "SELECT role_id FROM user WHERE User_id = $user_id";
-        $result = $db->query($query);
-
-        if ($result) {
-            $row = $result->fetch_assoc();
-            $role_id = $row['role_id'];
-
-            if ($role_id == 1) {
-                return 'administrador';
-            } elseif ($role_id == 2) {
-                return 'cliente';
-            }
-        }
-    }
-    return 'no_logueado';
-}
-
-$role = checkUserRole($db);  
-
 ?>
 
 
@@ -86,7 +63,6 @@ if ($role == 'administrador') {
     include('../assets/header/no_logueado.php');
 }
 
-echo checkUserRole()
 ?>
 
 </div>
@@ -103,7 +79,7 @@ echo checkUserRole()
       <img src="..\../assets\img\images\s3.png" alt="" width="100" height="100">
     </div>
     <h3>Los mejores alimentos del mundo</h3>
-    <a id="anuncio" class="anuncio" href="products.php">Los mejores alimentos del mundo</a>
+    <a id="anuncio" class="anuncio" href="products.php">leer mas</a>
   </div>
 
   <div class="ofert-2 b1">
@@ -111,7 +87,7 @@ echo checkUserRole()
       <img src="../../assets/img/images/s2.png" alt="" width="100" height="100">
     </div>
     <h3>Los mejores alimentos del mundo</h3>
-    <a id="anuncio" class="anuncio" href="products.php">Los mejores alimentos del mundo</a>
+    <a id="anuncio" class="anuncio" href="products.php">leer mas</a>
   </div>
 
   <div class="ofert-3 b1">
@@ -119,7 +95,7 @@ echo checkUserRole()
       <img src="../../assets/img/images/s3.png" alt="" width="100" height="100">
     </div>
     <h3>Los mejores alimentos del mundo</h3>
-    <a id="anuncio" class="anuncio" href="products.php">Los mejores alimentos del mundo</a>
+    <a id="anuncio" class="anuncio" href="products.php">leer mas</a>
   </div>
 </section>
 

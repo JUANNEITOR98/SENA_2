@@ -9,7 +9,7 @@
     $resultQuery = $result->fetch_all(MYSQLI_NUM);
   }
   if(!isset($_SESSION["newsession"])){
-    echo(" Si funciono XD");
+    echo("");
   }else{
     
   }
