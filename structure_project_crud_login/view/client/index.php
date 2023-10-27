@@ -76,13 +76,15 @@ function checkUserRole2($db) {
 
 <?php
 if ($role == 'administrador') {
+    // Encabezado para administradores
     include('../assets/header/administrador_header.php');
 } elseif ($role == 'cliente') {
+    // Encabezado para clientes
     include('../assets/header/cliente_header.php');
 } else {
+    // Encabezado para usuarios no logueados
     include('../assets/header/no_logueado.php');
 }
-
 ?>
 
 </div>

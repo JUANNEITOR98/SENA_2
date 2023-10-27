@@ -72,19 +72,34 @@ $role = checkUserRole();
 <body>
 <div class="top-bar container d-flex justify-content-between align-items-center">
   <div>
+<a href="index.php" class="logo">
+      <img src="../../assets\img\icons\logo_oficial.png" alt="Bootstrap" width="90" height="72">
+    </a>
+</div>  
+      <nav class="navbar">
+        <ul>
+          <li><a href="../client/index.php">Inicio</a></li>
+          <li><a href="../client/create.php">Registrarse</a></li>
+          <li><a href="../login/index.php">Login</a></li>
+          <li><a href="../client/products.php">todos los productos</a></li>
+        </ul>
+      </nav>
+      <div id="carrito">
+    <img src="/structure_project_crud_login/assets/img/images/car.svg" alt="car" id="img-carrito">
+    <div id="lista-carrito">
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <a href="#" id="vaciar-carrito" class="btn-3">Vaciar Carrito</a>
+    </div>
 
-  <?php
-if ($role == 'administrador') {
-    // Encabezado para administradores
-    include('../assets/header/administrador_header.php');
-} elseif ($role == 'cliente') {
-    // Encabezado para clientes
-    include('../assets/header/cliente_header.php');
-} else {
-    // Encabezado para usuarios no logueados
-    include('../assets/header/no_logueado.php');
-}
-?>
   </form>
 </div>
 </div>
