@@ -1,0 +1,16 @@
+Lo q planeo es hacer q client sirva para todos pero cambie a cada header segun el rol: 
+-en uno no te deja hacer nada q seria el de index.php de client ya q ese te obliga a registrarte (q si se pudiera q fuera automaticamente en rol de cliente seria mas facil) o a loguearte (pero no se como hacer q el login revise el rol)
+-el segundo seria registrado como cliente q esta en logueado.php o indexlogin.php q son lo mismo pero te deja acceder a comprar productos
+-el tercero seria lo mismo pero tendria un boton q solo el administrador puede acceder q lo lleve a index.php (de la carpeta user)
+
+
+Client= es para el cliente con rol cliente excepto index.php por q ese es para cuando no esta logueado (osea hay entras miras todo y luego te logueas) 
+login= el index.php es lo unico pa lo q lo uso la verdad no se q hace el resto
+user= es completamente para el admin q puede administrar los usuarios 
+
+
+NOTA:
+-Ya el registro y el login funcionan bien pero no se q pase cuando se incluyan los roles 
+-No tengo los roles por q los intente hacer pero se daño la base de datos totalmente XD
+-Los headers q quiero utilizar ya estan hechos en el assets de view
+
