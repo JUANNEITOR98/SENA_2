@@ -164,7 +164,7 @@ class Usuario {
          </div>
 </form>
 
-
+<?php include('../../view/assets/view/link.php');?>
 
 <!-- Incluir scripts JavaScript -->
 <?php include('../assets/js/js.php'); ?>

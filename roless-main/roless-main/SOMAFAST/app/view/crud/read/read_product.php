@@ -77,4 +77,5 @@ $productData = $objCrud->getProductById($productId);
         <p>El producto no existe o no se ha proporcionado un ID válido.</p>
     <?php endif; ?>
 </body>
+<?php include('../../assets/view/link.php'); ?>
 </html>

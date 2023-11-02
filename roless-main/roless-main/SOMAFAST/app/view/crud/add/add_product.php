@@ -101,4 +101,6 @@ $conn=$objConn->getConnection();
   
 </table>
 </body>
+<?php include('../../assets/view/link.php'); ?>
+
 </html>

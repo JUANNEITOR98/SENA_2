@@ -87,6 +87,7 @@ class LoginForm {
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </section>
@@ -102,3 +103,4 @@ $loginForm = new LoginForm($username, $password);
 $loginForm->renderForm();
 ?>
 <a href="../../../public/assets/icons/logo.png"></a>
+<?php include('../assets/view/link.php'); ?>

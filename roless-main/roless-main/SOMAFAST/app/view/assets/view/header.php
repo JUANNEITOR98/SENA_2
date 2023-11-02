@@ -1,6 +1,6 @@
 <nav class="header_total">
   <div class="container-fluid">
-  <a class="navbar-brand" href="./../../view/home/home.php"> <img src="../assets\img\icons\logo_oficial.png" width="80" class="img-fluid" /> </a>
+  <a class="navbar-brand" href="./../../view/home/home.php"> <img src="../assets\img\icons\logo_oficial.png" width="100" class="img-fluid" /> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -37,7 +37,7 @@
 
 <style>
   .header_total {
-    background-color: #33F1D1; 
+    background-color: #D9AA3D; 
 }
 
 .header_letters {

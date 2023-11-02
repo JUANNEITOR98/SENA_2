@@ -7,10 +7,9 @@
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-<?php include('../assets/view/header.php'); ?>
 <body>
-<br>
-<br><br>
+<section>
+<div>
         <div class="card">
             <div class="panel">
                 <div class="panel-heading text-center">
@@ -35,6 +34,6 @@
             </div>
         </div>
 </body>
-
-
-    <?php include('../assets/js/js.php'); ?>
+</div>
+</section>
+<?php include('../assets/js/js.php'); ?>

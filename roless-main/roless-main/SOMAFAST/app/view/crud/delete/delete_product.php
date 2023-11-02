@@ -53,4 +53,5 @@ if ($productData && isset($productData['Id'])) {
         <a href="../../crud/crud.php">Cancelar</a>
     </form>
 </body>
+<?php include('../../assets/view/link.php'); ?>
 </html>

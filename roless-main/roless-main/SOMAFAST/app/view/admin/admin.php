@@ -84,12 +84,11 @@ $conn = $objConn->getConnection();
       </table>
     </div>
   </div>
-   <div class="bottom-0 end-0 w-100" style="background: #e2e6e9; text-align: center;">
-    <a href="#">www.miempresa.com</a>
-  </div>
   <?php
   include('../assets/js/js.php');
   ?>
+  <?php include('../assets/view/link.php'); ?>
+
 </body>
 
 </html>

@@ -82,7 +82,7 @@ $loginForm->renderForm();
 
 </section>
 
-
+<?php include('../../view/assets/view/link.php');?>
 <?php
     include('../../view/assets/js/js.php');
 ?>
