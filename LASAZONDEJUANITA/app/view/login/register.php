@@ -31,6 +31,48 @@ $resultStatus = $resultArray[2];
 <!-- Incluir estilos CSS -->
 <?php include('../assets/css/css.php'); ?>
 <link rel="icon" type="image/png" href="../../assets/icons/logo.png">
+<style>
+body {
+      font-family: sans-serif;
+      color: white;
+    }
+
+    .p {
+      color:white;
+    }
+
+    .row {
+      width: 1000px;
+      margin: 0 auto;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #a391ff;
+      color: #white;
+      font-weight: bold;
+    }
+
+    .row {
+      background: #120033;
+    }
+    
+  </style>
+  
 
 
 
