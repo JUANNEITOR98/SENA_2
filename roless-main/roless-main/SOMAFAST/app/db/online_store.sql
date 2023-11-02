@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2023 a las 02:30:07
+-- Tiempo de generación: 02-11-2023 a las 17:01:11
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -178,9 +178,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`Id`, `Name`, `Description`, `Images`, `description_detailed`, `category`, `due_date`) VALUES
-(1, 'Hamburguesa', 'Una hamburguesa extra especial mas grande de lo habitual', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/NCI_Visuals_Food_Hamburger.jpg/640px-NCI_V', 'Una hamburguesa extra especial mas grande de lo habitual', 1, '2023-11-01'),
+(1, 'Hamburguesa', 'Una hamburguesa extra especial mas grande de lo habitual', 'https://www.portafolio.co/files/article_new_multimedia/uploads/2022/04/12/6255e2e41db6c.jpeg', 'Una hamburguesa extra especial mas grande de lo habitual', 1, '2023-11-01'),
 (2, 'Salchipapa', 'Un salchipapas clasico para disfrutas', 'https://www.comedera.com/wp-content/uploads/2021/07/salchipapas.jpg', 'Un salchipapas clasico para disfrutas', 1, '0000-00-00'),
-(3, 'Pizza', 'Una pizza perfecta para una persona', 'https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x67', 'Una pizza perfecta para una persona', 1, '0000-00-00');
+(3, 'Pizza', 'Una pizza perfecta para una persona', 'https://2trendies.com/hero/2023/04/pizzapepperoni.jpg?width=1200', 'Una pizza perfecta para una persona', 1, '0000-00-00'),
+(4, 'Perro Caliente', 'Un perro caliente rico y listo para comer', 'https://images-gmi-pmc.edge-generalmills.com/f5a517df-12c8-4d55-aa70-c882d99122e0.jpg', 'Un perro caliente rico y listo para comer', 1, '2023-08-31'),
+(5, 'Coca-Cola', 'Una Coca-Cola fria lista para un dia de calor', 'https://i0.wp.com/tucochinito.com/wp-content/uploads/2019/07/Coca-de-vidrio.jpg', 'Una Coca-Cola fria lista para un dia de calor', 1, '2023-08-31'),
+(6, 'Lasagña', 'la lasagña mas rica de todas', 'https://cdn.colombia.com/gastronomia/2011/08/25/lasagna-3685.jpg', 'la lasagña mas rica de todas', 1, '0000-00-00'),
+(7, 'Sandwich', 'Un sandwich riquisimo para cualquier momento', 'https://www.comedera.com/wp-content/uploads/2023/03/sandwich-submarino-shutterstock_2160373737.jpg', 'Un sandwich riquisimo para cualquier momento', 1, '0000-00-00'),
+(8, 'Un pollo asado', 'Un pollo asado para toda la familia ', 'https://s3.abcstatics.com/media/gurmesevilla/2010/03/pollo-asado-citricos-1920.jpg', 'Un pollo asado para toda la familia ', 1, '0000-00-00'),
+(9, 'Combo Especial', 'Un combo riquisimo para 4-6 personas', 'https://caliescribe.com/sites/default/files/comida-chatarra.jpg', 'Un combo riquisimo para 4-6 ', 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -269,15 +275,11 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`p_Id`, `p_nombre`, `p_username`, `p_pass`, `p_email`, `p_numberofdocument`, `p_numbercellphone`, `p_typeofdocument`, `p_gender`, `rol`) VALUES
-(2, 'Maicol', 'a', 'a', 'a@a.a', 12, 12, 1, 1, 2),
-(10, 'Maicols', 'Mike', '$2y$10$S5f789RyiEL1dQPjAi0UH.WovE9hQ4HYJh2GR361mFc1Y20h6BwZS', 'msh112@a.a', 126547, 23554134, 1, 1, 1),
-(11, 'MA', 'MEEE', '2', '1@A.A', 1, 23, 2, 2, 1),
-(13, 'maicol', 'mai', '123', 'a@a.a', 0, 32, 1, 1, 2),
-(14, 'Nuevo Usuario', 'nuevo_usuario', '123456', 'nuevo@usuario.com', 123456, 789012345, 1, 1, 2),
-(17, 'HOLA', 'HOLA123', '$2y$10$3nX0.h8XgeWU/1lFJJPp8.Ql8VrG22nL0OiryB2KzQnWwda5/cYgm', 'HOLAXD@H.H', 123456789, 123456789, 1, 1, NULL),
-(18, 'juan', 'juan', '$2y$10$4Ve0H8Xl8su51ZOIAky3OeVVP0G/YKyDlER2UtcsvMK2i81M87VrS', 'juan@gmail.com', 123456789, 123456789, 2, 1, NULL),
-(19, 'rocio', 'rocio', 'rocio', 'rocio@gmail.com', 123, 123, 2, 2, 1),
-(20, 'sad', 'ad', '$2y$10$wph.Zm7kzc30L8um9xRxMeU5m9ImWOghe0ED8Dd26fUvZhLaxHxYe', 'das', 123, 123, 1, 1, NULL);
+(1, 'admin', 'admin', '$2y$10$Y8hAzAPio03MZVehlyrYH.oKCVDf0WqB4gh0oP8FjZ3Ms6HTcON.G', 'admin@gmail.com', 123456789, 123456789, 1, 1, 2),
+(2, 'cliente', 'cliente', '$2y$10$FRd6rYhzc2R5WiqMr5Lx5.IkpNxfLZ3idxvYn5xqglD2rlHEI9HV2', 'cliente@gmail.com', 123456789, 123456789, 1, 1, 1),
+(3, 'Juan', 'JUANNEITOR98', '$2y$10$o6.0JYpS9e9KbvcdYTuOpeDNmV4vuT2n7nbu7waTFX6REy4pimLf.', 'garciaacevedojuandavid@gmail.com', 1023372763, 2147483647, 2, 1, 2),
+(4, 'Uriel', 'Uriel123', '$2y$10$kacJuagUtdFwsUUS74CaWuZGzf.J7vFO1CQvdcElRxzqP09AF2KTG', 'Uriel@gmail.com', 924613432, 3143454, 1, 1, 1),
+(5, 'Rocio0903', 'Rocio0903', '$2y$10$EUloqzv2OVFhwFFaRI5lYetp2se9XBhlwSknk5zeD7m165XRxAP7q', 'Rocio@gmail.com', 9865534, 2147483647, 1, 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -315,27 +317,6 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indices de la tabla `status`
---
-ALTER TABLE `status`
-  ADD PRIMARY KEY (`status_id`);
-
---
--- Indices de la tabla `typeproduct`
---
-ALTER TABLE `typeproduct`
-  ADD PRIMARY KEY (`typeProduct_id`);
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`p_Id`),
-  ADD KEY `Idgender` (`p_gender`),
-  ADD KEY `Document` (`p_typeofdocument`),
-  ADD KEY `usuarios_ibfk_1` (`rol`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -352,58 +333,10 @@ ALTER TABLE `gendertype`
   MODIFY `GenderType_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `img`
---
-ALTER TABLE `img`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT de la tabla `products`
---
-ALTER TABLE `products`
-  MODIFY `Id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
   MODIFY `Id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `status`
---
-ALTER TABLE `status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `typeproduct`
---
-ALTER TABLE `typeproduct`
-  MODIFY `typeProduct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `p_Id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `sta` FOREIGN KEY (`category`) REFERENCES `typeproduct` (`typeProduct_id`);
-
---
--- Filtros para la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `Document` FOREIGN KEY (`p_typeofdocument`) REFERENCES `document_type` (`DocumentType_id`),
-  ADD CONSTRAINT `Idgender` FOREIGN KEY (`p_gender`) REFERENCES `gendertype` (`GenderType_id`),
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`rol`) REFERENCES `roles` (`Id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
